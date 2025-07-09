@@ -12,6 +12,28 @@
         {% endblock %}
     </head>
     <body>
-        {% block body %}{% endblock %}
+        <header>
+
+            <div>
+                <h1>Centre ELAN Formation</h1>
+                <p>Système de Gestion Administrative</p>
+            </div>
+            
+            <nav>
+                <a href=" "> 📊 Tableau de bord</a>
+                <a href=" {{ path ('app_session') }}"> 📚 Session</a>
+                <a href=" {{ path ('app_stagiaire') }} "> 👥 Stagiaire</a>
+                <a href="">📖 Module</a>
+                <a href=""> ➕ Nouvelle Session</a>
+                <a href="">👤 Nouveau Stagiaire</a>
+            </nav>
+
+        </header>
+
+
+
+       <footer>
+
+       </footer>
     </body>
 </html>

@@ -4,6 +4,16 @@
 
 {% block body %}
 
+<div>
+    <h1>Gestion des Sessions</h1>
+    <h2> Liste • Ajout • Modification • Suppression des sessions de formation</h2>
+</div>
+
+{% for session in sessions %}
+
+    {{session.nom}} <br>
+
+{% endfor %}
 
 
 {% endblock %}
