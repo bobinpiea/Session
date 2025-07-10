@@ -36,6 +36,9 @@ class Stagiaire
     #[ORM\Column(length: 255)]
     private ?string $email = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeInterface $dateNaissance = null;
+
     /**
      * @var Collection<int, Session>
      */
@@ -129,6 +132,17 @@ class Stagiaire
         return $this;
     }
 
+    public function getDateNaissance(): ?\DateTimeInterface
+    {
+        return $this->dateNaissance;
+    }
+
+    public function setDateNaissance(?\DateTimeInterface $dateNaissance): static
+    {
+        $this->dateNaissance = $dateNaissance;
+        return $this;
+    }
+
     /**
      * @return Collection<int, Session>
      */
@@ -149,5 +163,12 @@ class Stagiaire
     {
         $this->sessions->removeElement($session);
         return $this;
+    }
+
+       public function getAge(): ?int
+    {
+        $now = new \DateTime();
+        return $this->dateNaissance->diff($now)->y;
+    
     }
 }

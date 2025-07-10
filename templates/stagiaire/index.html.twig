@@ -1,16 +1,18 @@
+{{stagiaire.age}}  pour moi 
+
+
 {% extends 'base.html.twig' %}
 
 {% block title %} Liste des Stagiaires{% endblock %}
 
 {% block body %}
 
-
 <div>
-<h1>Gestion des Stagiaires</h1>
-<h2>Liste • Ajout • Modification • Suppression des stagiaires de la formation</h2>
+    <h1>Gestion des Stagiaires</h1>
+    <h2>Liste • Ajout • Modification • Suppression des stagiaires de la formation</h2>
 </div>
 
-<section> {#Trouver comment faire les tat  #}
+<section> {# Trouver comment faire les stats plus tard #}
 
     <div>
         <p>Stagiaires</p>
@@ -32,48 +34,51 @@
 
 <p>📋 Liste des Stagiaires ({{ stagiaires|length }}) </p>
 
-
-    <table>
-        <thead>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Nom Complet</th>
+            <th>Âge</th>
+            <th>Coordonnées</th>
+            <th>Adresse</th>
+            <th>Sessions Inscrites</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for stagiaire in stagiaires %}
             <tr>
-                <th>Nom Complet</th>
-                <th>Coordonnées</th>
-                <th>Adresse</th>
-                <th>Sessions Inscrites</th>
-                <th>Actions</th>
+                <td>
+                    {{ stagiaire.nom }} {{ stagiaire.prenom }}
+                </td>
+                <td>
+                var_dump(stagiaire);
+                die;
+                    {{ stagiaire.age }} ans   
+                </td>
+                <td>
+                    📧 {{ stagiaire.email }}<br>
+                    ☎️ {{ stagiaire.telephone }}
+                </td>
+                <td>
+                    {{ stagiaire.adresse }}<br>
+                    {{ stagiaire.ville }} ({{ stagiaire.cp }})
+                </td>
+                <td>
+                    {% for session in stagiaire.sessions %}
+                        {{ session.nom }}<br>
+                    {% endfor %}
+                    {{ stagiaire.sessions|length }} session(s)
+                </td>
+                <td>
+                    <a href="">👁️</a>
+                    <a href="">✏️</a>
+                    <a href="">🗑️</a>  
+                    {# à compléter plus tard #}
+                </td>
             </tr>
-        </thead>
-        <tbody>
-            {% for stagiaire in stagiaires %}
-                <tr>
-                    <td>
-                         {# Penser a la methode toString ??? #}
-                        {{ stagiaire.nom }} {{ stagiaire.prenom }}<br> 
-                    </td>
-                    <td>
-                        📧 {{ stagiaire.email }}<br>
-                        ☎️ {{ stagiaire.telephone }}
-                    </td>
-                    <td>
-                        {{ stagiaire.adresse }}<br>
-                        {{ stagiaire.ville }} ({{ stagiaire.cp }})
-                    </td>
-                    <td>
-                        {% for session in stagiaire.sessions %}
-                            {{ session.nom }}
-                        {% endfor %}
-                        <br>
-                        {{ stagiaire.sessions|length }} session(s)
-                    </td>
-                    <td>
-                        <a href="">👁️</a>
-                        <a href="">✏️</a>
-                        <a href="">🗑️</a>  
-                        {# a Completer plus tard #}
-                    </td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+        {% endfor %}
+    </tbody>
+</table>
 
 {% endblock %}

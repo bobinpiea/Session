@@ -9,7 +9,9 @@
         <h2> Liste • Ajout • Modification • Suppression des sessions de formation</h2>
     </div>
 
-    <table border="1">
+<p> <b> 📋 Liste des sessions </b> </p>
+
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th>Intitulé Session</th>
@@ -31,7 +33,9 @@
                     <td>{{ session.placeReservees }}</td>
                     <td>{{ session.placeRestantes }}</td>
                     <td>
-                        <a href="">👁️ Voir</a>  
+                        <a href="">👁️</a>
+                        <a href="">✏️</a>
+                        <a href="">🗑️</a>  
                         {# a Completer plus tard #}
                     </td>
                 </tr>
