@@ -30,6 +30,50 @@
 
 </section>
 
-<p>📋 Liste des Stagiaires (12)</p>
+<p>📋 Liste des Stagiaires (12) ({{ stagiaires|length }}) </p>
+
+
+    <table>
+        <thead>
+            <tr>
+                <th>Nom Complet</th>
+                <th>Coordonnées</th>
+                <th>Adresse</th>
+                <th>Sessions Inscrites</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for stagiaire in stagiaires %}
+                <tr>
+                    <td>
+                         {# Penser a la methode toString ??? #}
+                        {{ stagiaire.nom }} {{ stagiaire.prenom }}<br> 
+                    </td>
+                    <td>
+                        📧 {{ stagiaire.email }}<br>
+                        ☎️ {{ stagiaire.telephone }}
+                    </td>
+                    <td>
+                        {{ stagiaire.adresse }}<br>
+                        {{ stagiaire.ville }} ({{ stagiaire.codePostal }})
+                    </td>
+                    <td>
+                        {% for session in stagiaire.sessions %}
+                            {{ session.nom }}
+                        {% endfor %}
+                        <br>
+                        {{ stagiaire.sessions|length }} session(s)
+                    </td>
+                    <td>
+                        <a href="">👁️</a>
+                        <a href="">✏️</a>
+                        <a href="">🗑️</a>  
+                        {# a Completer plus tard #}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 
 {% endblock %}

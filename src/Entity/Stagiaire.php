@@ -34,9 +34,9 @@ class Stagiaire
     private ?int $telephone = null;
 
     /**
-     * @var Collection<int, session>
+     * @var Collection<int, Session>
      */
-    #[ORM\ManyToMany(targetEntity: session::class, inversedBy: 'stagiaires')]
+    #[ORM\ManyToMany(targetEntity: Session::class, inversedBy: 'stagiaires')]
     private Collection $sessions;
 
     public function __construct()

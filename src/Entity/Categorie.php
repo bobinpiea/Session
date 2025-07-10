@@ -1,5 +1,6 @@
 <?php
 
+// ou se situe cette class
 namespace App\Entity;
 
 use App\Repository\CategorieRepository;
@@ -19,9 +20,9 @@ class Categorie
     private ?string $nom = null;
 
     /**
-     * @var Collection<int, module>
+     * @var Collection<int, Module>
      */
-    #[ORM\OneToMany(targetEntity: module::class, mappedBy: 'categorie', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: Module::class, mappedBy: 'categorie', orphanRemoval: true)]
     private Collection $modules;
 
     public function __construct()

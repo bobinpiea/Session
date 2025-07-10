@@ -4,16 +4,38 @@
 
 {% block body %}
 
-<div>
-    <h1>Gestion des Sessions</h1>
-    <h2> Liste • Ajout • Modification • Suppression des sessions de formation</h2>
-</div>
+    <div>
+        <h1>Gestion des Sessions</h1>
+        <h2> Liste • Ajout • Modification • Suppression des sessions de formation</h2>
+    </div>
 
-{% for session in sessions %}
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Intitulé Session</th>
+                <th>Date de début</th>
+                <th>Date de fin</th>
+                <th>Nb places théoriques</th>
+                <th>Nb places réservées</th>
+                <th>Nb places restantes</th>
+                <th>Détails programme</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for session in sessions %}
+                <tr>
+                    <td>{{ session.nom }}</td>
+                    <td>{{ session.dateDebut|date('d/m/Y') }}</td>
+                    <td>{{ session.dateFin|date('d/m/Y') }}</td>
+                    <td>{{ session.placeDisponibles }}</td>
+                    <td>{{ session.placeReservees }}</td>
+                    <td>{{ session.placeRestantes }}</td>
+                    <td><!--  Pour plus tard --></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 
-    {{session.nom}} <br>
-
-{% endfor %}
 
 
 {% endblock %}
