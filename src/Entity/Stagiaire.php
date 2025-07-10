@@ -30,8 +30,11 @@ class Stagiaire
     #[ORM\Column(length: 100)]
     private ?string $cp = null;
 
-    #[ORM\Column]
-    private ?int $telephone = null;
+    #[ORM\Column(length: 100)]
+    private ?string $telephone = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $email = null;
 
     /**
      * @var Collection<int, Session>
@@ -57,7 +60,6 @@ class Stagiaire
     public function setNom(string $nom): static
     {
         $this->nom = $nom;
-
         return $this;
     }
 
@@ -69,7 +71,6 @@ class Stagiaire
     public function setPrenom(string $prenom): static
     {
         $this->prenom = $prenom;
-
         return $this;
     }
 
@@ -81,7 +82,6 @@ class Stagiaire
     public function setAdresse(string $adresse): static
     {
         $this->adresse = $adresse;
-
         return $this;
     }
 
@@ -93,7 +93,6 @@ class Stagiaire
     public function setVille(string $ville): static
     {
         $this->ville = $ville;
-
         return $this;
     }
 
@@ -105,43 +104,50 @@ class Stagiaire
     public function setCp(string $cp): static
     {
         $this->cp = $cp;
-
         return $this;
     }
 
-    public function getTelephone(): ?int
+    public function getTelephone(): ?string
     {
         return $this->telephone;
     }
 
-    public function setTelephone(int $telephone): static
+    public function setTelephone(string $telephone): static
     {
         $this->telephone = $telephone;
+        return $this;
+    }
 
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): static
+    {
+        $this->email = $email;
         return $this;
     }
 
     /**
-     * @return Collection<int, session>
+     * @return Collection<int, Session>
      */
     public function getSessions(): Collection
     {
         return $this->sessions;
     }
 
-    public function addSession(session $session): static
+    public function addSession(Session $session): static
     {
         if (!$this->sessions->contains($session)) {
             $this->sessions->add($session);
         }
-
         return $this;
     }
 
-    public function removeSession(session $session): static
+    public function removeSession(Session $session): static
     {
         $this->sessions->removeElement($session);
-
         return $this;
     }
 }

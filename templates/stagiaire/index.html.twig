@@ -10,27 +10,27 @@
 <h2>Liste • Ajout • Modification • Suppression des stagiaires de la formation</h2>
 </div>
 
-<section>
+<section> {#Trouver comment faire les tat  #}
 
     <div>
-        Stagiaires
+        <p>Stagiaires</p>
     </div>
 
     <div>
-        Sessions
+        <p>Sessions</p>
     </div>
 
     <div>
-        Inscriptions
+        <p>Inscriptions</p>
     </div>
 
     <div>
-        Villes
+        <p>Villes</p>
     </div>
 
 </section>
 
-<p>📋 Liste des Stagiaires (12) ({{ stagiaires|length }}) </p>
+<p>📋 Liste des Stagiaires ({{ stagiaires|length }}) </p>
 
 
     <table>
@@ -56,7 +56,7 @@
                     </td>
                     <td>
                         {{ stagiaire.adresse }}<br>
-                        {{ stagiaire.ville }} ({{ stagiaire.codePostal }})
+                        {{ stagiaire.ville }} ({{ stagiaire.cp }})
                     </td>
                     <td>
                         {% for session in stagiaire.sessions %}
