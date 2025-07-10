@@ -5,11 +5,11 @@
 {% block body %}
 
     <div>
-        <h1>Gestion des Sessions</h1>
+        <h1>📚 Gestion des Sessions</h1>
         <h2> Liste • Ajout • Modification • Suppression des sessions de formation</h2>
     </div>
 
-<p> <b> 📋 Liste des sessions </b> </p>
+<p> <b> 📋 Liste des sessions   ({{ sessions|length }})</b> </p>
 
     <table class="table table-striped">
         <thead>
@@ -33,7 +33,7 @@
                     <td>{{ session.placeReservees }}</td>
                     <td>{{ session.placeRestantes }}</td>
                     <td>
-                        <a href="">👁️</a>
+                        <a href="{{ path('show_session', {id: session.id}) }}">👁️</a>
                         <a href="">✏️</a>
                         <a href="">🗑️</a>  
                         {# a Completer plus tard #}

@@ -9,4 +9,29 @@
     </div>
 
 
+    <p> <b> 📖 Liste des modules ({{ modules|length }}) </b> </p>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th> Intitulé du module</th>
+                <th> Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for module in modules %}
+                <tr>
+                    <td>{{ module.nom }}</td>
+                    <td>
+                        <a href="">👁️</a>
+                        <a href="">✏️</a>
+                        <a href="">🗑️</a>  
+                        {# a Completer plus tard #}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+
 {% endblock %}

@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détail du stagiaire{% endblock %}
+
+{% block body %}
+
+<h1>Détail du Stagiaire</h1>
+
+<p><strong>Nom complet :</strong> {{ stagiaire.nom }} {{ stagiaire.prenom }}</p>
+
+<p><strong>Âge :</strong> {{ stagiaire.age }} ans</p>
+
+<p><strong>Date de naissance :</strong> 
+    {% if stagiaire.dateNaissance %}
+        {{ stagiaire.dateNaissance|date('d/m/Y') }}
+    {% else %}
+        Non renseignée
+    {% endif %}
+</p>
+
+<p><strong>Email :</strong> {{ stagiaire.email }}</p>
+
+<p><strong>Téléphone :</strong> {{ stagiaire.telephone }}</p>
+
+<p><strong>Adresse :</strong> {{ stagiaire.adresse }}, {{ stagiaire.cp }} {{ stagiaire.ville }}</p>
+
+<h2>Sessions suivies ({{ stagiaire.sessions|length }})</h2>
+
+{% if stagiaire.sessions|length > 0 %}
+    <ul>
+        {% for session in stagiaire.sessions %}
+            <li>{{ session.nom }}</li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>Aucune session suivie.</p>
+{% endif %}
+
+<p>
+    <a href="{{ path('app_stagiaire') }}">← Retour à la liste des stagiaires</a>
+</p>
+
+{% endblock %}
