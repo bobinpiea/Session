@@ -14,7 +14,6 @@ final class StagiaireController extends AbstractController
     {
         
         $stagiaires = $stagiaireRepository->findAll(); 
-        dd($stagiaires);
         return $this->render('stagiaire/index.html.twig', [
             'stagiaires' => $stagiaires
         ]);

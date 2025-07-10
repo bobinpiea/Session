@@ -36,7 +36,7 @@ class Stagiaire
     #[ORM\Column(length: 255)]
     private ?string $email = null;
 
-    #[ORM\Column(nullable: true)]
+    #[ORM\Column(type: 'date', nullable: true)]
     private ?\DateTimeInterface $dateNaissance = null;
 
     /**
@@ -165,10 +165,15 @@ class Stagiaire
         return $this;
     }
 
-       public function getAge(): ?int
+    public function getAge(): ?int
     {
+        if (!$this->dateNaissance) {
+            return null;
+        }
+    
         $now = new \DateTime();
         return $this->dateNaissance->diff($now)->y;
-    
     }
+
+
 }
