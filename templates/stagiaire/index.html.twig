@@ -12,10 +12,12 @@
 <section> {# Trouver comment faire les stats plus tard #}
 
     <div>
+        {{stagiaires|length}}
         <p>Stagiaires</p>
     </div>
 
     <div>
+       {#<p>{{sessions|length }} </p>  A REVOIR ICI #}
         <p>Sessions</p>
     </div>
 
@@ -29,7 +31,7 @@
 
 </section>
 
-<p>📋 Liste des Stagiaires ({{ stagiaires|length }}) </p>
+<p><b>📋 Liste des Stagiaires ({{ stagiaires|length }}) </b></p>
 
 <table class="table table-striped">
     <thead>

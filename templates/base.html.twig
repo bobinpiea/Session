@@ -22,18 +22,61 @@
                 <a href=" "> 📊 Tableau de bord</a>
                 <a href=" {{ path ('app_session') }}"> 📚 Session</a>
                 <a href=" {{ path ('app_stagiaire') }} "> 👥 Stagiaire</a>
-                <a href="">📖 Module</a>
+                <a href=" {{ path ('app_module') }} ">📖 Module</a>
                 <a href=""> ➕ Nouvelle Session</a>
                 <a href="">👤 Nouveau Stagiaire</a>
             </nav>
-        </header>
+        </header> 
 
         {% block body %}
         
         {% endblock %}
 
         <footer>
+            <section>
+                <h4>Centre ELAN Formation</h4>
+                <address>
+                14 rue du Rhône<br>
+                67100 STRASBOURG<br>
+                📞 03.88.30.78.30<br>
+                🌐 <a href="https://www.elan-formation.fr">www.elan-formation.fr</a>
+                </address>
+            </section>
 
+            <section>
+                <h4>Support Technique</h4>
+                <ul>
+                <li><a href="#">Centre d'aide</a></li>
+                <li><a href="#">Contact Support</a></li>
+                <li><a href="#">Documentation</a></li>
+                <li><a href="#">Mises à jour</a></li>
+                </ul>
+            </section>
+
+            <section>
+                <h4>Sécurité</h4>
+                <ul>
+                <li><a href="#">Politique de confidentialité</a></li>
+                <li><a href="#">Conditions d'utilisation</a></li>
+                <li><a href="#">Politique de sécurité</a></li>
+                <li><a href="#">Sauvegarde des données</a></li>
+                </ul>
+            </section>
+
+            <section>
+                <h4>Formation</h4>
+                <ul>
+                <li><a href="#">Nos formations</a></li>
+                <li><a href="#">Calendrier</a></li>
+                <li><a href="#">Formateurs</a></li>
+                <li><a href="#">Certifications</a></li>
+                </ul>
+            </section>
+
+            <p>
+                © 2025 Centre ELAN Formation. Tous droits réservés. |
+                Interface Administrateur v1.2
+            </p>
         </footer>
 
         {% block javascripts %}

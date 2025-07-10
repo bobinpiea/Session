@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+
 use App\Repository\StagiaireRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,9 +14,11 @@ final class StagiaireController extends AbstractController
     public function index(StagiaireRepository $stagiaireRepository): Response
     {
         
+      //  $sessions = $sessionRepository->findAll();
         $stagiaires = $stagiaireRepository->findAll(); 
         return $this->render('stagiaire/index.html.twig', [
-            'stagiaires' => $stagiaires
+            'stagiaires' => $stagiaires,
+         //   'sessions' => $sessions, 
         ]);
     }
 }
