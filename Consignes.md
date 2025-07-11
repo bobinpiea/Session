@@ -66,3 +66,19 @@ WHERE date_fin < now();
     //            ->getResult()
     //        ;
     //    }
+
+
+      //    /**
+    //     * @return Session[] Returns an array of Session objects
+    //     */
+    //    public function findByExampleField($nom): array
+    //    {
+    //        return $this->createQueryBuilder('s')
+    //            ->andWhere('s.nom = :id')
+    //            ->setParameter('val', $value)
+    //            ->orderBy('s.id', 'ASC')
+    //            ->setMaxResults(6)
+    //            ->getQuery()
+    //            ->getResult()
+    //        ;
+    //    }

@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Liste des catégories{% endblock %}
+
+{% block body %}
+   <div>
+        <h1>📖 Gestion des Catégories</h1>
+        <h2> Liste • Ajout • Modification • Suppression des catégories de la formation</h2>
+    </div>
+
+
+    <p> <b> 📖 Liste des catégories ({{ categories|length }}) </b> </p>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th> Intitulé de la catégorie</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for categorie in categories %}
+                <tr>
+                    <td>{{ categorie.nom }}</td>
+                    <td>
+                        <a href="">👁️</a>
+                        <a href="">✏️</a>
+                        <a href="">🗑️</a>  
+                        {# a Completer plus tard #}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+
+{% endblock %}
