@@ -3,7 +3,7 @@
 {% block title %}Hello ModuleController!{% endblock %}
 
 {% block body %}
-   <div>
+   <div class="bloc-titre-page">
         <h1>📖 Gestion des Modules</h1>
         <h2> Liste • Ajout • Modification • Suppression des modules de la formation</h2>
     </div>
@@ -23,9 +23,9 @@
                 <tr>
                     <td>{{ module.nom }}</td>
                     <td>
-                        <a href="">👁️</a>
-                        <a href="">✏️</a>
-                        <a href="">🗑️</a>  
+                        <a href="{{ path('show_module', { id: module.id }) }}">👁️ Voir</a>
+                        <a href="#">✏️ Modifier</a>
+                        <a href="#">🗑️ Supprimer</a>
                         {# a Completer plus tard #}
                     </td>
                 </tr>

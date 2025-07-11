@@ -1,24 +1,227 @@
+/* COMMUN A TOUTE LES PAGES  */
+
 * {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
 }
 
+body {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
 /* CSS DU LAYOUT  */
 
 /* HEADER  */
 
-.logo-text h1 {
-    color: #667eea;
-    font-size: 1.8rem;
+/* En-tête global */
+header {
+    background-color: #f9f9fb; /* Très clair (presque blanc) */
+    padding: 20px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
 }
 
+/* Bloc à gauche : logo + titres */
+.bloc-logo-titres {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+/* Logo chapeau */
+.logo-chapeau {
+    width: 50px;
+    height: 50px;
+    border-radius: 15px;
+    background-color: #586ae2;
+    padding: 8px;
+}
+
+/* Titres */
+.titres-formation h1 {
+    margin: 0;
+    font-size: 1.7rem;
+    color: #586ae2;
+}
+.titres-formation p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+/*  ZONE DES MENUS */
+.zone-menus {
+    background-color: #f2f2f8; 
+    padding: 15px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Navigation */
+.zone-menus nav {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+/* Liens */
+.zone-menus nav a {
+    text-decoration: none;
+    font-size: 1rem;
+    color: #444;
+    transition: 0.2s ease-in-out;
+}
+
+/* Survol */
+.zone-menus nav a:hover {
+    text-decoration: underline;
+}
 
 /* FOOTER  */
 
+/* Pied de page */
 
-/*  */
+footer {
+    background: linear-gradient(to right, #f4f1fa, #f9f8fd); 
+    padding: 40px 60px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap; 
+    font-family: Arial, sans-serif;
+}
+
+footer section {
+    width: 23%;
+    min-width: 200px;
+    margin-bottom: 20px;
+}
+
+footer h4 {
+    color: #5f5fdd;
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+footer address {
+    font-style: normal;
+    line-height: 1.7;
+    color: #444;
+}
+
+footer ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+footer ul li {
+    margin-bottom: 8px;
+}
+
+footer a {
+    color: #333;
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+footer p {
+    width: 100%;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #333;
+    border-top: 1px solid #ccc;
+    margin-top: 30px;
+    padding-top: 15px;
+}
 
 
+/* LES AUTRES VUES  */
 
-/*  */
+/* H1 et H2 centré "Gestion ...."  */
+
+.bloc-titre-page {
+    background-color: #f8f7fc;  
+    padding: 30px 40px;
+    border-radius: 25px;
+    text-align: center;
+    margin: 30px auto;
+    max-width: 80%;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    margin-top: 50px; 
+}
+
+.bloc-titre-page h1 {
+    color: #5f65d3;
+    font-weight: bold;
+    font-size: 2.2rem;
+    margin-bottom: 10px;
+}
+
+.bloc-titre-page h2 {
+    font-size: 1.1rem;
+    font-weight: normal;
+    color: #444;
+    margin: 0;
+}
+
+/* TABLEAU PRINCIPAL SESSIONS (réutilisable partout) */
+/********** TABLEAU K **********/
+
+.tableau-k {
+    background-color: #f7f7fb;
+    border-radius: 25px;
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 95%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 100px;   /* espace avec le header */
+    margin-bottom: 200px; /
+}
+
+.titre-tableau {
+    font-weight: bold;
+    font-size: 1.3em;
+    color: #3a3a3a;
+    margin-bottom: 20px;
+}
+
+/* Table styling */
+.tableau-k table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: sans-serif;
+}
+
+.tableau-k thead {
+    background-color: #3b82f6;
+    color: white;
+}
+
+.tableau-k th, .tableau-k td {
+    padding: 12px 16px;
+    text-align: left;
+}
+
+.tableau-k tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.tableau-k tbody tr:nth-child(odd) {
+    background-color: #ffffff;
+}
+
+.tableau-k a {
+    margin: 0 5px;
+    text-decoration: none;
+    font-size: 1.2em;
+}
