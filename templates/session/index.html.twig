@@ -17,9 +17,9 @@
                 <th>Intitulé Session</th>
                 <th>Date de début</th>
                 <th>Date de fin</th>
-                <th>Nb places théoriques</th>
-                <th>Nb places réservées</th>
-                <th>Nb places restantes</th>
+                <th>Session(s) Passée(s) </th>
+                <th>Session(s) en cours</th>
+                <th>Session(s) à venir</th>
                 <th>Détails programme</th>
             </tr>
         </thead>
@@ -29,9 +29,9 @@
                     <td>{{ session.nom }}</td>
                     <td>{{ session.dateDebut|date('d/m/Y') }}</td>
                     <td>{{ session.dateFin|date('d/m/Y') }}</td>
-                    <td>{{ session.placeDisponibles }}</td>
-                    <td>{{ session.placeReservees }}</td>
-                    <td>{{ session.nbPlacesRestantes }}</td>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
                     <td>
                         <a href="{{ path('show_session', {id: session.id}) }}">👁️</a>
                         <a href="">✏️</a>
