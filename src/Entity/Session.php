@@ -183,4 +183,16 @@ class Session
 
         return $this;
     }
+
+ 
+    // Calcule des places restantes automatiquement
+    public function getNbPlacesRestantes(): ?int
+    {
+        if ($this->placeDisponibles === null || $this->placeReservees === null) {
+            return null;
+        }
+
+        return $this->placeDisponibles - $this->placeReservees;
+    }
+
 }

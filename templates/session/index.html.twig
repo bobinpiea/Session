@@ -31,7 +31,7 @@
                     <td>{{ session.dateFin|date('d/m/Y') }}</td>
                     <td>{{ session.placeDisponibles }}</td>
                     <td>{{ session.placeReservees }}</td>
-                    <td>{{ session.placeRestantes }}</td>
+                    <td>{{ session.nbPlacesRestantes }}</td>
                     <td>
                         <a href="{{ path('show_session', {id: session.id}) }}">👁️</a>
                         <a href="">✏️</a>

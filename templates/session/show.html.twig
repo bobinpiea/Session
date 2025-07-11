@@ -13,7 +13,7 @@
 
 <p><strong>Places disponibles :</strong> {{ session.placeDisponibles }}</p>
 <p><strong>Places réservées :</strong> {{ session.placeReservees }}</p>
-<p><strong>Places restantes :</strong> {{ session.placeRestantes }}</p>
+<p><strong>Places restantes :</strong> {{ session.nbPlacesRestantes  }}</p>
 
 <h2>Stagiaires inscrits ({{ session.stagiaires|length }})</h2>
 {% if session.stagiaires|length > 0 %}
