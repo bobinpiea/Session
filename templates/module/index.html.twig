@@ -3,35 +3,36 @@
 {% block title %}Hello ModuleController!{% endblock %}
 
 {% block body %}
-   <div class="bloc-titre-page">
-        <h1>📖 Gestion des Modules</h1>
-        <h2> Liste • Ajout • Modification • Suppression des modules de la formation</h2>
-    </div>
+    <div class="bloc-titre-page">
+            <h1>📖 Gestion des Modules</h1>
+            <h2> Liste • Ajout • Modification • Suppression des modules de la formation</h2>
+        </div>
 
+    <div class="tableau-k"> 
 
-    <p> <b> 📖 Liste des modules ({{ modules|length }}) </b> </p>
+        <p class="titre-tableau">  📖 Liste des modules ({{ modules|length }})  </p>
 
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th> Intitulé du module</th>
-                <th> Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for module in modules %}
+        <table>
+            <thead>
                 <tr>
-                    <td>{{ module.nom }}</td>
-                    <td>
-                        <a href="{{ path('show_module', { id: module.id }) }}">👁️ Voir</a>
-                        <a href="#">✏️ Modifier</a>
-                        <a href="#">🗑️ Supprimer</a>
-                        {# a Completer plus tard #}
-                    </td>
+                    <th> Intitulé du module</th>
+                    <th> Actions</th>
                 </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-
+            </thead>
+            <tbody>
+                {% for module in modules %}
+                    <tr>
+                        <td>{{ module.nom }}</td>
+                        <td>
+                            <a href="{{ path('show_module', { id: module.id }) }}">👁️ Voir</a>
+                            <a href="#">✏️ Modifier</a>
+                            <a href="#">🗑️ Supprimer</a>
+                            {# a Completer plus tard #}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
 {% endblock %}

@@ -4,78 +4,83 @@
 
 {% block body %}
 
-<div class="bloc-titre-page">
-    <h1>Gestion des Stagiaires</h1>
-    <h2>Liste • Ajout • Modification • Suppression des stagiaires de la formation</h2>
-</div>
-
-<section> {# Trouver comment faire les stats plus tard #}
-
-    <div>
-        {{stagiaires|length}}
-        <p>Stagiaires</p>
+    <div class="bloc-titre-page">
+        <h1>Gestion des Stagiaires</h1>
+        <h2>Liste • Ajout • Modification • Suppression des stagiaires de la formation</h2>
     </div>
 
-    <div>
-       {#<p>{{sessions|length }} </p>  A REVOIR ICI #}
-        <p>Sessions</p>
+
+    <section class="statistiques-container"> {# Trouver comment faire les stats plus tard #}
+
+        <div class="stat-box"> <!-- Bloc pour les stagiaires -->
+            <span class="stat-nombre">{{ stagiaires|length }}</span>
+            <p class="stat-label">Stagiaires actifs</p>
+        </div>
+
+        <div class="stat-box"> <!-- Bloc pour les sessions -->
+            <span class="stat-nombre">6</span>
+            <p class="stat-label">Sessions en cours</p>
+        </div>
+
+        <div class="stat-box"> <!-- Bloc pour les inscriptions -->
+            <span class="stat-nombre">14</span>
+            <p class="stat-label">Inscriptions totales</p>
+        </div>
+
+        <div class="stat-box"> <!-- Bloc pour les villes -->
+            <span class="stat-nombre">3</span>
+            <p class="stat-label">Villes représentées</p>
+        </div>
+
+    </section>
+
+    <div class="tableau-k"> 
+        <p class="titre-tableau" >📋 Liste des Stagiaires ({{ stagiaires|length }}) </p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Nom Complet</th>
+                    <th>Âge</th>
+                    <th>Coordonnées</th>
+                    <th>Adresse</th>
+                    <th>Sessions Inscrites</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for stagiaire in stagiaires %}
+                    <tr>
+                        <td>
+                            {{ stagiaire.nom }} {{ stagiaire.prenom }}
+                        </td>
+                        <td>
+                            {{ stagiaire.age }} ans   
+                        </td>
+                        <td>
+                            📧 {{ stagiaire.email }}<br>
+                            ☎️ {{ stagiaire.telephone }}
+                        </td>
+                        <td>
+                            {{ stagiaire.adresse }}<br>
+                            {{ stagiaire.ville }} ({{ stagiaire.cp }})
+                        </td>
+                        <td>
+                            {% for session in stagiaire.sessions %}
+                                {{ session.nom }}<br>
+                            {% endfor %}
+                            {{ stagiaire.sessions|length }} session(s)
+                        </td>
+                        <td>
+                            <a href="{{ path('show_stagiaire', {id: stagiaire.id}) }}">👁️</a>
+                            <a href="">✏️</a>
+                            <a href="">🗑️</a>  
+                            {# à compléter plus tard #}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
-
-    <div>
-        <p>Inscriptions</p>
-    </div>
-
-    <div>
-        <p>Villes</p>
-    </div>
-
-</section>
-
-<p><b>📋 Liste des Stagiaires ({{ stagiaires|length }}) </b></p>
-
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Nom Complet</th>
-            <th>Âge</th>
-            <th>Coordonnées</th>
-            <th>Adresse</th>
-            <th>Sessions Inscrites</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for stagiaire in stagiaires %}
-            <tr>
-                <td>
-                    {{ stagiaire.nom }} {{ stagiaire.prenom }}
-                </td>
-                <td>
-                    {{ stagiaire.age }} ans   
-                </td>
-                <td>
-                    📧 {{ stagiaire.email }}<br>
-                    ☎️ {{ stagiaire.telephone }}
-                </td>
-                <td>
-                    {{ stagiaire.adresse }}<br>
-                    {{ stagiaire.ville }} ({{ stagiaire.cp }})
-                </td>
-                <td>
-                    {% for session in stagiaire.sessions %}
-                        {{ session.nom }}<br>
-                    {% endfor %}
-                    {{ stagiaire.sessions|length }} session(s)
-                </td>
-                <td>
-                    <a href="{{ path('show_stagiaire', {id: stagiaire.id}) }}">👁️</a>
-                    <a href="">✏️</a>
-                    <a href="">🗑️</a>  
-                    {# à compléter plus tard #}
-                </td>
-            </tr>
-        {% endfor %}
-    </tbody>
-</table>
 
 {% endblock %}
