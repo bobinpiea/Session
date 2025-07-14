@@ -3,11 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\Module;
+use App\Form\ModuleType;
 use App\Entity\Categorie;
 use App\Entity\Programme;
 use App\Repository\ModuleRepository;
 use App\Repository\CategorieRepository;
 use App\Repository\ProgrammeRepository;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -27,6 +29,21 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
                 ]);
             }
 
+        
+        /* Formulaire */
+            #[Route('/module/new', name: 'new_module')]
+            public function new(Request $request): Response
+            {
+                $module = new Module(); // On crée un nouvel objet Module
+
+                $form = $this->createForm(ModuleType::class, $module); // On génère le formulaire lié à Module
+
+                return $this->render('module/new.html.twig', [
+                    'formAddModule' => $form,
+                ]);
+            }
+
+                    
         /* détails */
                 #[Route('/module/{id}', name: 'show_module')]
             public function show(Module $module): Response

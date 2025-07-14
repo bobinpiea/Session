@@ -3,10 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Stagiaire;
+use App\Form\StagiaireType;
 use App\Repository\StagiaireRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 final class StagiaireController extends AbstractController
 {
@@ -19,6 +21,18 @@ final class StagiaireController extends AbstractController
         return $this->render('stagiaire/index.html.twig', [
             'stagiaires' => $stagiaires,
          //   'sessions' => $sessions, 
+        ]);
+    }
+
+    #[Route('/stagiaire/new', name: 'new_stagiaire')]
+    public function new(Request $request): Response
+    {
+        $stagiaire = new Stagiaire(); // On crée un nouvel objet Stagiaire
+
+        $form = $this->createForm(StagiaireType::class, $stagiaire); // On génère le formulaire lié à Stagiaire
+
+        return $this->render('stagiaire/new.html.twig', [
+            'formAddStagiaire' => $form,
         ]);
     }
 
