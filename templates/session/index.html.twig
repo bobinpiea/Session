@@ -9,39 +9,105 @@
         <h2> Liste • Ajout • Modification • Suppression des sessions de formation</h2>
     </div>
 
-<div class="tableau-k">
-    <p class="titre-tableau">📋 Liste des sessions ({{ sessions|length }})</p>
-
-    <table>
-        <thead>
-            <tr>
-                <th>Intitulé Session</th>
-                <th>Date de début</th>
-                <th>Date de fin</th>
-                <th>Session(s) Passée(s)</th>
-                <th>Session(s) en cours</th>
-                <th>Session(s) à venir</th>
-                <th>Détails programme</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for session in sessions %}
+    <!-- Sessions passées -->
+    <div class="tableau-k">
+       
+        <p class="titre-tableau">📋 Sessions Passées ( {{ sessionsPassees|length }} )</p>
+       
+        <table>
+            <thead>
                 <tr>
-                    <td>{{ session.nom }}</td>
-                    <td>{{ session.dateDebut|date('d/m/Y') }}</td>
-                    <td>{{ session.dateFin|date('d/m/Y') }}</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>
-                        <a href="{{ path('show_session', {id: session.id}) }}">👁️</a>
-                        <a href="">✏️</a>
-                        <a href="">🗑️</a>
-                    </td>
+                    <th>Intitulé</th>
+                    <th>Date de début</th>
+                    <th>Date de fin</th>
+                    <th>Détails</th>
                 </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</div>
+            </thead>
+           
+            <tbody>
+                {% for session in sessionsPassees %}
+                    <tr>
+                        <td>{{ session.nom }}</td>
+                        <td>{{ session.dateDebut|date('d/m/Y') }}</td>
+                        <td>{{ session.dateFin|date('d/m/Y') }}</td>
+                        <td><a href="{{ path('show_session', {id: session.id}) }}">👁️</a>
+                            <a href="">✏️</a>
+                            <a href="">🗑️</a>  
+                            {# à compléter plus tard #}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!--  Sessions en cours -->
+    <div class="tableau-k">
+       
+        <p class="titre-tableau">📘 Sessions en cours ({{ sessionsEnCours|length }})</p>
+       
+        <table>
+
+            <thead>
+                <tr>
+                    <th>Intitulé</th>
+                    <th>Date de début</th>
+                    <th>Date de fin</th>
+                    <th>Détails</th>
+                </tr>
+            </thead>
+          
+            <tbody>
+                {% for session in sessionsEnCours %}
+                    <tr>
+                        <td>{{ session.nom }}</td>
+                        <td>{{ session.dateDebut|date('d/m/Y') }}</td>
+                        <td>{{ session.dateFin|date('d/m/Y') }}</td>
+                        <td><a href="{{ path('show_session', {id: session.id}) }}">👁️</a>
+                            <a href="">✏️</a>
+                            <a href="">🗑️</a>  
+                            {# à compléter plus tard #}                     
+                        </td>
+                    </tr>
+                {% endfor %}
+
+            </tbody>
+        
+        </table>
+    </div>
+
+    <!--  Sessions à venir -->
+    <div class="tableau-k">
+
+        <p class="titre-tableau">📗 Sessions à venir ({{ sessionsAVenir|length }})</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Intitulé</th>
+                    <th>Date de début</th>
+                    <th>Date de fin</th>
+                    <th>Détails</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for session in sessionsAVenir %}
+                    <tr>
+                        <td>{{ session.nom }}</td>
+                        <td>{{ session.dateDebut|date('d/m/Y') }}</td>
+                        <td>{{ session.dateFin|date('d/m/Y') }}</td>
+                        <td><a href="{{ path('show_session', {id: session.id}) }}">👁️</a>
+                            <a href="">✏️</a>
+                            <a href="">🗑️</a>  
+                            {# à compléter plus tard #}                        
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+
+        </table>
+        
+    </div>
 
 {% endblock %}

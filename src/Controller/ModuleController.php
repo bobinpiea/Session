@@ -19,43 +19,57 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
     final class ModuleController extends AbstractController
     {
-        /* Liste */
-            #[Route('/module', name: 'app_module')]
-            public function index(ModuleRepository $moduleRepository): Response
-            {
-                $modules = $moduleRepository->findAll();
-                return $this->render('module/index.html.twig', [
-                    'modules' => $modules,
-                ]);
-            }
+        /* Listes */
 
-        
-        /* Formulaire */
-            #[Route('/module/new', name: 'new_module')]
-            public function new(Request $request): Response
-            {
-                $module = new Module(); // On crée un nouvel objet Module
+            /* Liste MODULE */
+                #[Route('/module', name: 'app_module')]
+                public function index(ModuleRepository $moduleRepository): Response
+                {
+                    $modules = $moduleRepository->findAll();
+                    return $this->render('module/index.html.twig', [
+                        'modules' => $modules,
+                    ]);
+                }
 
-                $form = $this->createForm(ModuleType::class, $module); // On génère le formulaire lié à Module
 
-                return $this->render('module/new.html.twig', [
-                    'formAddModule' => $form,
-                ]);
-            }
 
-                    
-        /* détails */
-                #[Route('/module/{id}', name: 'show_module')]
-            public function show(Module $module): Response
-            {
-                return $this->render('module/show.html.twig', [
-                'module' => $module,
-                ]);
-            }
+        /* Formulaires */  
+             
+            /* Formulaire */
+                #[Route('/module/new', name: 'new_module')]
+                public function new(Request $request): Response
+                {
+                    $module = new Module(); // On crée un nouvel objet Module
+
+                    $form = $this->createForm(ModuleType::class, $module); // On génère le formulaire lié à Module
+
+                    return $this->render('module/new.html.twig', [
+                        'formAddModule' => $form,
+                    ]);
+                }
+
+            
+        /* Détails */    
+
+            /* détail */
+                    #[Route('/module/{id}', name: 'show_module')]
+                public function show(Module $module): Response
+                {
+                    return $this->render('module/show.html.twig', [
+                    'module' => $module,
+                    ]);
+                }
+
+
+
 
     }
 
-/*
+
+
+/* PROGRAMME  
+
+    
 
   
 
@@ -82,22 +96,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
         }
 
+*/
 
-   
+/* CATEGORIE  
 
         final class CategorieController extends AbstractController
         {
         
-                #[Route('/categorie', name: 'app_categorie')]
-                public function index(CategorieRepository $categorieRepository): Response
-                {
-                    $categories = $categorieRepository->findAll();
-                    return $this->render('categorie/index.html.twig', [
-                        'categories' => $categories,
-                    ]);
-                }
-
-        
+               
                     #[Route('/categorie/{id}', name: 'show_categorie')]
                 public function show(Categorie $categorie): Response
                 {
@@ -108,9 +114,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
         }
 
-
-
 */
+
+
 
 
 

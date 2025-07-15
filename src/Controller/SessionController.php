@@ -18,10 +18,13 @@ final class SessionController extends AbstractController
         #[Route('/session', name: 'app_session')]
         public function index(SessionRepository $sessionRepository): Response
         {   
-            // Render : Permet de faire le lien entre le controller et la vue
-            $sessions = $sessionRepository->findAll(); 
+            $sessionsPassees = $sessionRepository->findPastSessions();
+            $sessionsEnCours = $sessionRepository->findCurrentSessions();
+            $sessionsAVenir = $sessionRepository->findUpcomingSessions();
             return $this->render('session/index.html.twig', [
-                'sessions' => $sessions,
+                'sessionsPassees' => $sessionsPassees,
+                'sessionsEnCours' => $sessionsEnCours,
+                'sessionsAVenir' => $sessionsAVenir,         
             ]);
         }
 

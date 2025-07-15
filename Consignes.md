@@ -52,33 +52,33 @@ WHERE date_fin < now();
 
 
 
-  //    /**
-    //     * @return Session[] Returns an array of Session objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('s')
-    //            ->andWhere('s.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('s.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+public function findPastSessions(): array
+{
+    return $this->createQueryBuilder('s')
+        ->where('s.dateFin < :now')
+        ->setParameter('now', now())
+        ->orderBy('s.dateFin', 'DESC')
+        ->getQuery()
+        ->getResult();
+}
 
+public function findCurrentSessions(): array
+{
+    return $this->createQueryBuilder('s')
+        ->where('s.dateDebut <= :now')
+        ->andWhere('s.dateFin >= :now')
+        ->setParameter('now', now())
+        ->orderBy('s.dateDebut', 'ASC')
+        ->getQuery()
+        ->getResult();
+}
 
-      //    /**
-    //     * @return Session[] Returns an array of Session objects
-    //     */
-    //    public function findByExampleField($nom): array
-    //    {
-    //        return $this->createQueryBuilder('s')
-    //            ->andWhere('s.nom = :id')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('s.id', 'ASC')
-    //            ->setMaxResults(6)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+public function findUpcomingSessions(): array
+{
+    return $this->createQueryBuilder('s')
+        ->where('s.dateDebut > :now')
+        ->setParameter('now', now())
+        ->orderBy('s.dateDebut', 'ASC')
+        ->getQuery()
+        ->getResult();
+}

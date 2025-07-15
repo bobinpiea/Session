@@ -2,9 +2,10 @@
 
 namespace App\Repository;
 
+use now;
 use App\Entity\Session;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<Session>
@@ -41,10 +42,35 @@ class SessionRepository extends ServiceEntityRepository
     //        ;
     //    }
 
+public function findPastSessions(): array
+{
+    return $this->createQueryBuilder('s')
+        ->where('s.dateFin < :now')
+        ->setParameter('now', new \DateTime()) 
+        ->orderBy('s.dateFin', 'DESC')
+        ->getQuery()
+        ->getResult();
+}
 
+public function findCurrentSessions(): array
+{
+    return $this->createQueryBuilder('s')
+        ->where('s.dateDebut <= :now')
+        ->andWhere('s.dateFin >= :now')
+        ->setParameter('now', new \DateTime()) 
+        ->orderBy('s.dateDebut', 'ASC')
+        ->getQuery()
+        ->getResult();
+}
 
-
-
-
-    
+public function findUpcomingSessions(): array
+{
+    return $this->createQueryBuilder('s')
+        ->where('s.dateDebut > :now')
+        ->setParameter('now', new \DateTime()) 
+        ->orderBy('s.dateDebut', 'ASC')
+        ->getQuery()
+        ->getResult();
+}
+  
 }
