@@ -1,5 +1,18 @@
 <?php
 
+// FORMULAIRE STAGIAIRE (StagiaireType)
+
+// Ce fichier permet de construire automatiquement le formulaire lié à l'entité
+// Stagiaire. Il contient la liste des champs à afficher
+// (nom, prénom, email, etc.) et la configuration de chaque champ (type, label,
+// options, lien avec d'autres entités comme Session).
+// Symfony utilisera ce fichier pour générer le HTML du formulaire, valider
+// les données, et hydrater automatiquement un objet Stagiaire.
+
+// Ce fichier est appelé depuis le contrôleur pour créer ou modifier un stagiaire.
+
+
+
 namespace App\Form;
 
 use App\Entity\Session;

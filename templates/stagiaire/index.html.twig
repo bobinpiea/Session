@@ -9,6 +9,7 @@
         <h2>Liste • Ajout • Modification • Suppression des stagiaires de la formation</h2>
     </div>
 
+    <!--  STATISTIQUES  -->
 
     <section class="statistiques-container"> {# Trouver comment faire les stats plus tard #}
 
@@ -71,6 +72,7 @@
                             {% endfor %}
                             {{ stagiaire.sessions|length }} session(s)
                         </td>
+                         <!-- Actions disponibles : voir / modifier / supprimer -->
                         <td>
                             <a href="{{ path('show_stagiaire', {id: stagiaire.id}) }}">👁️</a>
                             <a href="">✏️</a>

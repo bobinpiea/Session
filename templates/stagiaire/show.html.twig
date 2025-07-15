@@ -1,43 +1,52 @@
-{% extends 'base.html.twig' %}
+{# On hérite du fichier de base qui contient le header, footer, etc. #}
+    {% extends 'base.html.twig' %}
 
-{% block title %}Détail du stagiaire{% endblock %}
+{# Ce titre s’affichera dans l’onglet du navigateur #}
+    {% block title %}Détail du stagiaire{% endblock %}
 
-{% block body %}
+    {% block body %}
 
-<h1>Détail du Stagiaire</h1>
+{# Titre principal de la page #}
+    <h1>Détail du Stagiaire</h1>
 
-<p><strong>Nom complet :</strong> {{ stagiaire.nom }} {{ stagiaire.prenom }}</p>
+    <!-- Affichage du nom complet -->
+    <p><strong>Nom complet :</strong> {{ stagiaire.nom }} {{ stagiaire.prenom }}</p>
 
-<p><strong>Âge :</strong> {{ stagiaire.age }} ans</p>
+    <!-- Affichage de l’âge -->
+    <p><strong>Âge :</strong> {{ stagiaire.age }} ans</p>
 
-<p><strong>Date de naissance :</strong> 
-    {% if stagiaire.dateNaissance %}
-        {{ stagiaire.dateNaissance|date('d/m/Y') }}
+     <!-- Affichage de la date de naissance -->
+    <p><strong>Date de naissance :</strong> 
+        {% if stagiaire.dateNaissance %}
+            {{ stagiaire.dateNaissance|date('d/m/Y') }} {# Formatage de la date si elle est renseignée #}
+        {% else %}
+            Non renseignée  {# Message si la date de naissance est vide #}
+        {% endif %}
+    </p>
+
+    <p><strong>Email :</strong> {{ stagiaire.email }}</p>
+
+    <p><strong>Téléphone :</strong> {{ stagiaire.telephone }}</p>
+
+    <p><strong>Adresse :</strong> {{ stagiaire.adresse }}, {{ stagiaire.cp }} {{ stagiaire.ville }}</p>
+
+    {# Affiche le nombre total de sessions suivies par ce stagiaire #}
+    <h2>Sessions suivies ({{ stagiaire.sessions|length }})</h2>
+
+    {% if stagiaire.sessions|length > 0 %}
+        <ul>
+            {% for session in stagiaire.sessions %}
+                <li>{{ session.nom }}</li>
+                {# Affiche le nom de chaque session suivie, Pour cela ne pas oublier de faire la boucle #}
+            {% endfor %}
+        </ul>
     {% else %}
-        Non renseignée
+        <p>Aucune session suivie.</p>   {# Message alternatif si aucune session n'est liée #}
     {% endif %}
-</p>
 
-<p><strong>Email :</strong> {{ stagiaire.email }}</p>
+    <!-- Lien de retour vers la liste des stagiaires -->
+    <p>
+        <a href="{{ path('app_stagiaire') }}"> ← Retour à la liste des stagiaires</a>
+    </p>
 
-<p><strong>Téléphone :</strong> {{ stagiaire.telephone }}</p>
-
-<p><strong>Adresse :</strong> {{ stagiaire.adresse }}, {{ stagiaire.cp }} {{ stagiaire.ville }}</p>
-
-<h2>Sessions suivies ({{ stagiaire.sessions|length }})</h2>
-
-{% if stagiaire.sessions|length > 0 %}
-    <ul>
-        {% for session in stagiaire.sessions %}
-            <li>{{ session.nom }}</li>
-        {% endfor %}
-    </ul>
-{% else %}
-    <p>Aucune session suivie.</p>
-{% endif %}
-
-<p>
-    <a href="{{ path('app_stagiaire') }}">← Retour à la liste des stagiaires</a>
-</p>
-
-{% endblock %}
+    {% endblock %}

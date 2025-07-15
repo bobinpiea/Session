@@ -1,5 +1,19 @@
 <?php
 
+// ENTITÉ STAGIAIRE
+
+// Ce fichier représente la classe Stagiaire dans la base de données.
+//
+// Chaque stagiaire est un objet contenant : un nom, un prénom, une adresse, 
+// un email, une date de naissance, un numéro de téléphone, etc.
+//
+// Cette entité est reliée à la base de données via Doctrine ORM.
+// Elle est aussi reliée à plusieurs sessions grâce à une relation ManyToMany.
+// Symfony va utiliser cette classe pour créer des formulaires, faire ds requêtes,
+// ou afficher les données dans des vues.
+
+
+
 namespace App\Entity;
 
 use App\Repository\StagiaireRepository;

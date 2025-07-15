@@ -1,5 +1,24 @@
 <?php
 
+// CONTRÔLEUR STAGIAIRE (StagiaireController)
+
+// Ce fichier regroupe toutes les actions possibles concernant les stagiaires :
+// - afficher la liste des stagiaires
+// - créer un nouveau stagiaire
+// - afficher le détail d’un stagiaire
+//
+// Chaque méthode de ce contrôleur correspond à une route (URL) du site.
+// Symfony exécute ces méthodes quand on visite les pages du site liées aux stagiaires.
+//
+// Ce contrôleur utilise :
+// - l’entité Stagiaire (pour les données)
+// - le formulaire StagiaireType (pour les ajouts/modifications)
+// - le repository StagiaireRepository (pour interagir avec la base)
+
+// ------> D'autres fonctions sont à venir également 
+
+
+
 namespace App\Controller;
 
 use App\Entity\Stagiaire;
