@@ -54,13 +54,14 @@ public function findPastSessions(): array
 
 public function findCurrentSessions(): array
 {
-    return $this->createQueryBuilder('s')
-        ->where('s.dateDebut <= :now')
-        ->andWhere('s.dateFin >= :now')
-        ->setParameter('now', new \DateTime()) 
-        ->orderBy('s.dateDebut', 'ASC')
-        ->getQuery()
-        ->getResult();
+    return $this->createQueryBuilder('s') // 's' = Session
+        ->where('s.dateDebut <= :now') // filtre 1
+        ->andWhere('s.dateFin >= :now') // filtre 2
+        ->setParameter('now', new \DateTime()) // :now = aujourd’hui
+        ->orderBy('s.dateDebut', 'ASC') // tri
+        ->getQuery() // on construit
+        ->getResult(); // on exécute et on reçoit un tableau 
+    // Idem que dans SQl qd on prepare et on exécute ultérieurement 
 }
 
 public function findUpcomingSessions(): array
