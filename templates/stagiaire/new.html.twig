@@ -1,12 +1,25 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Ajouter un stagiaire{% endblock %}
+{% block title %}
+    {% if edit %}
+        Modifier un stagiaire
+    {% else %}
+        Ajouter un stagiaire
+    {% endif %}
+{% endblock %}
 
 {% block body %}
-    <h1>Ajouter un stagiaire</h1>
+
+<div class="bloc-titre-page"> 
+    {% if edit %}
+        <h1>Modifier un stagiaire</h1>
+    {% else %}
+        <h1>Ajouter un stagiaire</h1>
+    {% endif %}
+
+</div>
 
     {{ form(formAddStagiaire) }}
-    {# Génère automatiquement le formulaire lié à l’objet "formAddStagiaire" #}
+     {# Génère automatiquement le formulaire lié à l’objet "formAddStagiaire" #}
     {# Le rendu inclut tous les champs, les balises <form>, les <label> et les boutons #}
-        
 {% endblock %}

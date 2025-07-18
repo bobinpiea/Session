@@ -28,18 +28,67 @@ final class SessionController extends AbstractController
             ]);
         }
 
-    /* Formulaire  */
-        #[Route('/session/new', name: 'new_session')]
-        public function new(Request $request): Response
+    /* Formulaire + Edit */
+        // ROUTES : Cette méthode sera appelée lorsqu’un utilisateur accède à /session/new ou /session/{id}/edit
+        #[Route('/session/new', name: 'new_session')] // Création d'un nouvelle session 
+        #[Route('/session/{id}/edit', name: 'edit_session')] // Modification d'une nouvelle sessions
+        public function new(Request $request, EntityManagerInterface $entityManager, Session $session = null): Response
         {
-            $session = new Session(); // On crée un nouvel objet Session
+            // Si aucun objet Session n’est fourni (cas du /new), on en crée un vide
+            if (!$session) {
+                $session = new Session(); // création d'un objet vide à remplir
+            }
 
-            $form = $this->createForm(SessionType::class, $session); // On génère le formulaire lié à Session
+            // On génère le formulaire à partir de la classe SessionType
+            // On le lie directement à l’objet $session (création ou modification)
+            $form = $this->createForm(SessionType::class, $session); // Génère un formulaire basé sur une classe
 
+            // On relie le formulaire aux données envoyées dans la requête HTTP
+            // Cela permet de détecter s’il a été soumis et de remplir automatiquement l’objet
+            $form->handleRequest($request); // Lie les données reçues à l’objet
+
+            // Vérification : si le formulaire a été soumis ET que tous les champs sont valides
+            if ($form->isSubmitted() && $form->isValid()) {
+
+                // On récupère les données du formulaire (remplissent automatiquement $session)
+                $session = $form->getData();
+
+                if ($session->estComplet()) {
+                    $this->addFlash("error", "Impossible d'ajouter des stagiaires : la session est complète.");
+                    return $this->redirectToRoute('app_session');
+                }
+
+                // On prépare l’objet pour l’insérer (ou mettre à jour) en base de données
+                $entityManager->persist($session); // Prepare PDO
+
+                // On exécute l’insertion ou mise à jour dans la base de données
+                $entityManager->flush(); // Execute PDO
+
+                // Une fois terminé, on redirige vers la liste des sessions
+                return $this->redirectToRoute('app_session');
+            }
+
+            // Si le formulaire n’a pas été soumis ou est invalide, on réaffiche la page avec le formulaire
             return $this->render('session/new.html.twig', [
                 'formAddSession' => $form,
+                'edit' => $session->getId() // Permet d’afficher dynamiquement “Ajouter” ou “Modifier”
             ]);
         }
+
+    /* Suppression  */
+
+        // ROUTE :
+        #[Route('/session/{id}/delete', name: 'delete_session')]
+        public function delete(Session $session, EntityManagerInterface $entityManager): Response
+        {
+            // On supprime la session de la base de données
+            $entityManager->remove($session); // Prépare la suppression
+            $entityManager->flush(); // Exécute la suppression
+
+            // Redirection vers la liste des sessions
+            return $this->redirectToRoute('app_session');
+        }
+
 
     /* Détail  */
         #[Route('/session/{id}', name: 'show_session')]
@@ -50,4 +99,20 @@ final class SessionController extends AbstractController
             ]);
         }
 
+    /* Liste des programmes associés à une session (modules + nb jours)  A SUPPRIMER */
+        #[Route('/programme/session/{id}', name: 'show_programme_by_session')]
+        public function showProgrammeBySession(Session $session): Response
+        {
+            // On récupère les programmes liés à cette session et on les stocke
+            $programmes = $session->getProgrammes();
+
+            // On affiche la vue avec les données
+            return $this->render('session/programmes.html.twig', [
+                'session' => $session,
+                'programmes' => $programmes
+            ]);
+        }
+
 }
+
+

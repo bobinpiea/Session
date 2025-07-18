@@ -1,9 +1,24 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Ajouter un module{% endblock %}
+{% block title %}
+    {% if edit %}
+        Modifier un module
+    {% else %}
+        Ajouter un module
+    {% endif %}
+{% endblock %}
 
 {% block body %}
-    <h1>Ajouter un module</h1>
+
+    <div class="bloc-titre-page">
+        {% if edit %}
+            <h1>Modifier un module</h1>
+        {% else %}
+            <h1>Ajouter un module</h1>
+        {% endif %}
+    </div>
 
     {{ form(formAddModule) }}
+    {# Affiche automatiquement le formulaire lié à l’objet "formAddModule" #}
+
 {% endblock %}

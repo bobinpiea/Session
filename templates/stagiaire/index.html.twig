@@ -74,8 +74,8 @@
                         </td>
                          <!-- Actions disponibles : voir / modifier / supprimer -->
                         <td>
-                            <a href="{{ path('show_stagiaire', {id: stagiaire.id}) }}">👁️</a>
-                            <a href="">✏️</a>
+                            <a href="{{ path('show_stagiaire', {'id': stagiaire.id}) }}">👁️</a>
+                            <a href="{{ path('edit_stagiaire', {'id': stagiaire.id}) }}">✏️</a>
                             <a href="">🗑️</a>  
                             {# à compléter plus tard #}
                         </td>

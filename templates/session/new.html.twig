@@ -3,7 +3,17 @@
 {% block title %}Ajouter une session{% endblock %}
 
 {% block body %}
-    <h1>Ajouter une session</h1>
 
-    {{ form(formAddSession) }}
+    <div class="bloc-titre-page">
+        {% if edit %}
+            <h1>Modifier une session</h1>
+        {% else %}
+            <h1>Ajouter une session</h1>
+        {% endif %}
+    </div>
+
+    <div>
+        {{ form(formAddSession) }}
+    </div>
+
 {% endblock %}

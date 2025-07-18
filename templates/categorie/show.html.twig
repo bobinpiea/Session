@@ -1,0 +1,36 @@
+{# On hérite du fichier de base qui contient le header, footer, etc. #}
+{% extends 'base.html.twig' %}
+
+{# Ce titre s’affichera dans l’onglet du navigateur #}
+{% block title %}Détail de la catégorie{% endblock %}
+
+{% block body %}
+
+    {# Titre principal de la page #}
+       <div class="bloc-titre-page"> 
+            <h1>Détail de la Catégorie</h1>
+       </div> 
+
+    <!-- Affichage du nom de la catégorie -->
+    <p><strong>Nom de la catégorie :</strong> {{ categorie.nom }}</p>
+
+    {# Affichage du nombre total de modules associés #}
+    <h2>Modules associés ({{ categorie.modules|length }})</h2>
+
+    {% if categorie.modules|length > 0 %}
+        <ul>
+            {% for module in categorie.modules %}
+                <li>{{ module.nom }}</li>
+                {# Affiche le nom de chaque module lié à la catégorie #}
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Aucun module lié à cette catégorie.</p> {# Message alternatif si aucun module n’est lié #}
+    {% endif %}
+
+    <!-- Lien de retour vers la liste des catégories -->
+    <p>
+        <a href="{{ path('app_categorie') }}"> ← Retour à la liste des catégories</a>
+    </p>
+
+{% endblock %}

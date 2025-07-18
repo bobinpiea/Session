@@ -4,30 +4,77 @@
 
 {% block body %}
 
-<h1>Détail de la Session</h1>
+    <div class="bloc-titre-page"> 
+            <h1>Détail de la Session</h1> {# TROUVER TWIG POUR CALCULE LA DIFF ENTRE DATE #}
+        </div>
 
-<p><strong>Nom :</strong> {{ session.nom }}</p>
+    <p><strong>Nom :</strong> {{ session.nom }}</p>
 
-<p><strong>Date de début :</strong> {{ session.dateDebut|date('d/m/Y') }}</p>
-<p><strong>Date de fin :</strong> {{ session.dateFin|date('d/m/Y') }}</p>
+    <p><strong>Date de début :</strong> {{ session.dateDebut|date('d/m/Y') }}</p>
+    <p><strong>Date de fin :</strong> {{ session.dateFin|date('d/m/Y') }}</p>
 
-<p><strong>Places disponibles :</strong> {{ session.placeDisponibles }}</p>
-<p><strong>Places réservées :</strong> {{ session.placeReservees }}</p>
-<p><strong>Places restantes :</strong> {{ session.nbPlacesRestantes  }}</p>
+    <p><strong>Places disponibles :</strong> {{ session.placeDisponibles }}</p>
 
-<h2>Stagiaires inscrits ({{ session.stagiaires|length }})</h2>
-{% if session.stagiaires|length > 0 %}
-    <ul>
-        {% for stagiaire in session.stagiaires %}
-            <li>{{ stagiaire.nom }} {{ stagiaire.prenom }}</li>
-        {% endfor %}
-    </ul>
-{% else %}
-    <p>Aucun stagiaire inscrit.</p>
-{% endif %}
+    <p><strong>Places réservées :</strong> {{ session.placeReservees }}</p>
+    <p><strong>Places restantes :</strong> {{ session.nbPlacesRestantes  }}</p>
 
-<p>
-    <a href="{{ path('app_session') }}">← Retour à la liste des sessions</a>
-</p>
+        {% if session.estComplet %}
+            <p style="color: red"> Cette session est complète. Aucune inscription possible.</p>
+        {% else %}
+            <p> Des places sont encore disponibles.</p>
+        {% endif %}
+
+    <h2>Stagiaires inscrits ({{ session.stagiaires|length }})</h2>
+
+    {% if session.stagiaires|length > 0 %}
+        <ul>
+            {% for stagiaire in session.stagiaires %}
+                <li>{{ stagiaire.nom }} {{ stagiaire.prenom }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Aucun stagiaire inscrit.</p>
+    {% endif %}
+
+    <p>
+        <a href="{{ path('app_session') }}">← Retour à la liste des sessions</a>
+    </p>
+
+    <h2>Programme de la session ({{ session.programmes|length }})</h2>
+
+    {% if session.programmes|length > 0 %}
+
+        {% set totalJours = 0 %}
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Nom du Module</th>
+                    <th>Nombre de jours</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for programme in session.programmes %} {# Mieux lire les S #}
+                    <tr>
+                        <td>{{ programme.module.nom }}</td>
+                        <td>{{ programme.nbJours }}</td>
+                    </tr>
+                
+                    {% set totalJours = totalJours + programme.nbJours %}
+                {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th>Total des jours</th>
+                    <th>{{ totalJours }}</th>
+                </tr>
+            </tfoot>
+        </table>
+
+    {% else %}
+
+        <p>Aucun module prévu pour cette session.</p>
+        
+    {% endif %}
 
 {% endblock %}

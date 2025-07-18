@@ -195,4 +195,11 @@ class Session
         return $this->placeDisponibles - $this->placeReservees;
     }
 
+
+    //  Méthode pour savoir quand la session est complète
+    public function estComplet(): bool
+    {
+        return $this->placeReservees >= $this->placeDisponibles;
+    }
+
 }

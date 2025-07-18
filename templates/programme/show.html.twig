@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détail du programme{% endblock %}
+
+{% block body %}
+    <div class="bloc-titre-page"> 
+        <h1>Détail du Programme</h1>
+    </div>  
+
+    <p><strong>Module concerné :</strong> {{ programme.module.nom }}</p>
+    <p><strong>Session concernée :</strong> {{ programme.session.nom }}</p>
+    <p><strong>Nombre de jours attribués :</strong> {{ programme.nbJours }} jours</p>
+
+    <p>
+        <a href="{{ path('app_programme') }}">← Retour à la liste des programmes</a>
+    </p>
+{% endblock %}

@@ -24,6 +24,8 @@ namespace App\Controller;
 use App\Entity\Stagiaire;
 use App\Form\StagiaireType;
 use App\Repository\StagiaireRepository;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -43,15 +45,38 @@ final class StagiaireController extends AbstractController
         ]);
     }
 
+   
     #[Route('/stagiaire/new', name: 'new_stagiaire')]
-    public function new(Request $request): Response
+    #[Route('/stagiaire/{id}/edit', name: 'edit_stagiaire')]
+    public function new(Request $request, EntityManagerInterface $entityManager, Stagiaire $stagiaire = null): Response
     {
-        $stagiaire = new Stagiaire(); // On crée un nouvel objet Stagiaire
+        if (!$stagiaire) {
+            $stagiaire = new Stagiaire(); // On crée un nouvel objet Stagiaire s'il n'existe pas 
+        }
 
         $form = $this->createForm(StagiaireType::class, $stagiaire); // On génère le formulaire lié à Stagiaire
 
+        $form->handleRequest($request);
+
+        // Vérification : si le formulaire a été soumis ET que tous les champs sont valides
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            // On récupère les données du formulaire (remplissent automatiquement $stagiaire)
+            $stagiaire = $form->getData();
+
+            // On prépare l’objet pour l’insérer (ou mettre à jour) en base de données
+            $entityManager->persist($stagiaire); // Prepare PDO
+
+            // On exécute l’insertion ou mise à jour dans la base de données
+            $entityManager->flush(); // Execute PDO
+
+            // Une fois terminé, on redirige vers la liste des stagiaires
+            return $this->redirectToRoute('app_stagiaire');
+        }
+
         return $this->render('stagiaire/new.html.twig', [
             'formAddStagiaire' => $form,
+            'edit' => $stagiaire->getId() // Ne pas OUBLIER CELA
         ]);
     }
 

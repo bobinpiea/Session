@@ -1,0 +1,43 @@
+{# templates/programme/index.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Programmes{% endblock %}
+
+{% block body %}
+
+    <!-- A REVOIR ET A REFAIRE -->
+    <!-- TITRE PRINCIPAL REVENIR DESSUS PLUS TARD -->
+    <div class="bloc-titre-page">
+        <h1>📚 Gestion des Programmes</h1>
+        <h2>Liste • Ajout • Modification • Suppression des programmes de formation</h2>
+    </div>
+
+    <!-- TABLEAU DES PROGRAMMES -->
+    <div class="tableau-k"> 
+        <p class="titre-tableau">📋 Liste des Programmes ({{ programmes|length }})</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Nom du Module</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for programme in programmes %}
+                    <tr>
+                        <td>{{ programme.module.nom }}</td>
+                        <td>
+                            <a href="{{ path('show_programme', {'id': programme.id}) }}">👁️</a>
+                            <a href="">✏️</a>
+                            <a href="">🗑️</a>  
+                            {# à compléter plus tard #}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}

@@ -1,36 +1,40 @@
+{# templates/categorie/index.html.twig #}
+
 {% extends 'base.html.twig' %}
 
-{% block title %} Liste des catégories{% endblock %}
+{% block title %}Liste des Catégories{% endblock %}
 
 {% block body %}
-   <div>
-        <h1>📖 Gestion des Catégories</h1>
-        <h2> Liste • Ajout • Modification • Suppression des catégories de la formation</h2>
+
+    <div class="bloc-titre-page">
+        <h1>Gestion des Catégories</h1>
+        <h2>Liste • Ajout • Modification • Suppression des catégories du catalogue</h2>
     </div>
 
+    <div class="tableau-k"> 
+        <p class="titre-tableau">📚 Liste des Catégories ({{ categories|length }})</p>
 
-    <p> <b> 📖 Liste des catégories ({{ categories|length }}) </b> </p>
-
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th> Intitulé de la catégorie</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for categorie in categories %}
+        <table>
+            <thead>
                 <tr>
-                    <td>{{ categorie.nom }}</td>
-                    <td>
-                        <a href="">👁️</a>
-                        <a href="">✏️</a>
-                        <a href="">🗑️</a>  
-                        {# a Completer plus tard #}
-                    </td>
+                    <th>Nom de la catégorie</th>
+                    <th>Actions</th>
                 </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-
+            </thead>
+            <tbody>
+                {% for categorie in categories %}
+                    <tr>
+                        <td>{{ categorie.nom }}</td>
+                        <td>
+                            <a href="{{ path('show_categorie', {'id': categorie.id}) }}">👁️</a>
+                            <a href="">✏️</a>
+                            <a href="">🗑️</a>  
+                            {# à compléter plus tard #}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
 {% endblock %}

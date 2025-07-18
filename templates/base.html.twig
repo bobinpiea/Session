@@ -29,8 +29,8 @@
                 <a href="{{ path('app_session') }}">📚 Sessions</a>
                 <a href="{{ path('app_stagiaire') }}">👥 Stagiaires</a>
                 <a href="{{ path('app_module') }}">📖 Modules</a>
-                <a href="#"> Catégories</a>
-                <a href="#"> Programmes</a>
+                <a href="{{ path('app_categorie') }}"> Catégories</a>
+                <a href="{{ path('app_programme') }}"> Programmes</a>
             </nav>
             <!-- 2e menu : action d'ajout -->
             <nav>
@@ -40,6 +40,7 @@
                 <a href="#">➕ Programme</a>
                 <a href="#">➕ Catégorie</a>
             </nav>
+            
         </div>
 
         {% block body %}

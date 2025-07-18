@@ -31,9 +31,8 @@
                         <td>{{ session.dateDebut|date('d/m/Y') }}</td>
                         <td>{{ session.dateFin|date('d/m/Y') }}</td>
                         <td><a href="{{ path('show_session', {id: session.id}) }}">👁️</a>
-                            <a href="">✏️</a>
-                            <a href="">🗑️</a>  
-                            {# à compléter plus tard #}
+                            <a href="{{ path('edit_session', {'id': session.id}) }}">✏️</a>
+                            <a href="{{ path('delete_session', {'id': session.id}) }}">🗑️</a>
                         </td>
                     </tr>
                 {% endfor %}
@@ -64,9 +63,8 @@
                         <td>{{ session.dateDebut|date('d/m/Y') }}</td>
                         <td>{{ session.dateFin|date('d/m/Y') }}</td>
                         <td><a href="{{ path('show_session', {id: session.id}) }}">👁️</a>
-                            <a href="">✏️</a>
-                            <a href="">🗑️</a>  
-                            {# à compléter plus tard #}                     
+                            <a href="{{ path('edit_session', {'id': session.id}) }}">✏️</a>
+                            <a href="{{ path('delete_session', {'id': session.id}) }}">🗑️</a>                   
                         </td>
                     </tr>
                 {% endfor %}
@@ -98,9 +96,8 @@
                         <td>{{ session.dateDebut|date('d/m/Y') }}</td>
                         <td>{{ session.dateFin|date('d/m/Y') }}</td>
                         <td><a href="{{ path('show_session', {id: session.id}) }}">👁️</a>
-                            <a href="">✏️</a>
-                            <a href="">🗑️</a>  
-                            {# à compléter plus tard #}                        
+                            <a href="{{ path('edit_session', {'id': session.id}) }} ">✏️</a>
+                            <a href="{{ path('delete_session', {'id': session.id}) }}">🗑️</a>                       
                         </td>
                     </tr>
                 {% endfor %}
