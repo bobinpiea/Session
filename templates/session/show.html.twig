@@ -13,6 +13,8 @@
     <p><strong>Date de début :</strong> {{ session.dateDebut|date('d/m/Y') }}</p>
     <p><strong>Date de fin :</strong> {{ session.dateFin|date('d/m/Y') }}</p>
 
+    <p><strong>Durée de la session :</strong> {{ session.DureeSession() }} (jours ouvrés) </p>
+
     <p><strong>Places disponibles :</strong> {{ session.placeDisponibles }}</p>
 
     <p><strong>Places réservées :</strong> {{ session.placeReservees }}</p>
