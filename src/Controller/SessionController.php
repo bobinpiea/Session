@@ -113,8 +113,13 @@ final class SessionController extends AbstractController
 
                 $session = $SessionRepository->find($idSession);  // ou find($session->getId())
                 $stagiaire = $StagiaireRepository->find($idStagiaire); // ou find($stagiaire->getId())
-        
-                $session->removeStagiaire($stagiaire);
+
+                if ($session && $stagiaire) {
+                    $session->removeStagiaire($stagiaire);
+
+                    if ($session->getPlaceDisponibles() > 0) {
+                        $session->setPlaceDisponibles($session->getPlaceDisponibles() - 1);
+                    }
 
                 $EntityManager->persist($session);
                 $EntityManager->flush();
@@ -126,8 +131,9 @@ final class SessionController extends AbstractController
                 'id' => $idSession,
             ]);
         
+            }
         }
 
 
-}
 
+}

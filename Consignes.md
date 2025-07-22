@@ -111,3 +111,33 @@ public function findNonInscrits(Session $session): array
     return $qb->getQuery()->getResult();
 }
 
+
+
+
+#[Route('/session/{idSession}/remove-stagiaire/{idStagiaire}', name: 'remove_stagiaire_session')]
+public function removeStagiaireFromSession(
+    EntityManagerInterface $em,
+    $idSession,
+    $idStagiaire,
+    SessionRepository $sr,
+    StagiaireRepository $stRep
+): Response {
+    $session = $sr->find($idSession);
+    $stagiaire = $stRep->find($idStagiaire);
+
+    if ($session && $stagiaire) {
+        $session->removeStagiaire($stagiaire);
+
+        // Mise à jour du nombre de places réservées
+        if ($session->getNbPlaces() > 0) {
+            $session->setNbPlaces($session->getNbPlaces() - 1);
+        }
+
+        $em->persist($session);
+        $em->flush();
+
+        $this->addFlash('success', 'Stagiaire retiré de la session avec succès.');
+    }
+
+    return $this->redirectToRoute('show_session', ['id' => $idSession]);
+}
