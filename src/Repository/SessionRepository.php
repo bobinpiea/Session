@@ -115,7 +115,8 @@ class SessionRepository extends ServiceEntityRepository
         $query = $sub->getQuery(); // // Conversion en requete DQL 
         return $query->getResult(); // On retourne le resultat et exécution de la requete 
     }
-
+    
+  /*  
     // OBJECTIF
     // AFFICHER LES MODULES QUI NE SONT PAS DANS UNE SESSION 
     public function findNonProgrammes($session_id) {
@@ -145,6 +146,51 @@ class SessionRepository extends ServiceEntityRepository
         return $query->getResult();
     }
     
+ */
 
-  
+/*
+    public function findNonProgrammes($session_id) {
+    $em = $this->getEntityManager();
+
+    // Étape 1 : récupérer les modules DÉJÀ programmés pour cette session
+    $qb = $em->createQueryBuilder();
+    $qb->select('m')
+        ->from('App\Entity\Module', 'm')
+        ->leftJoin('programme', 'pr')
+        ->where('pr.session = :id');
+
+    // Étape 2 : récupérer tous les modules SAUF ceux trouvés dans la sous-requête
+    $sub = $em->createQueryBuilder();
+    $sub->select('mod')
+        ->from('App\Entity\Module', 'mod')
+        ->where($sub->expr()->notIn('mod.id', $qb->getDQL()))
+        ->setParameter('id', $session_id)
+        ->orderBy('mod.nom');
+
+    $query = $sub->getQuery();
+    return $query->getResult();
+}
+
+ */
+public function findNonProgrammes($session_id) {
+    $em = $this->getEntityManager();
+
+    // Étape 1 : récupérer les modules déjà programmés
+    $qb = $em->createQueryBuilder();
+    $qb->select('m')
+        ->from('App\Entity\Module', 'm')
+        ->leftJoin('App\Entity\Programme', 'pr', 'WITH', 'pr.module = m')
+        ->where('pr.session = :id');
+
+    // Étape 2 : récupérer les modules NON programmés
+    $sub = $em->createQueryBuilder();
+    $sub->select('mod')
+        ->from('App\Entity\Module', 'mod')
+        ->where($sub->expr()->notIn('mod.id', $qb->getDQL()))
+        ->setParameter('id', $session_id)
+        ->orderBy('mod.nom');
+
+    $query = $sub->getQuery();
+    return $query->getResult();
+}
 }
