@@ -38,45 +38,69 @@
         <p>Aucun stagiaire inscrit.</p>
     {% endif %}
 
+        <h2>Liste des stagiaires non inscrits</h2>
+
+        <ul>
+            {% for stagiaire in nonInscrits %}
+                <li>{{ stagiaire.nom }} {{ stagiaire.prenom }}</li>
+            {% else %}
+                <li>Aucun stagiaire à inscrire.</li>
+            {% endfor %}
+        </ul>
+
     <p>
-        <a href="{{ path('app_session') }}">← Retour à la liste des sessions</a>
+        <a style="color: white" href="{{ path('app_session') }}">← Retour à la liste des sessions</a>
     </p>
 
     <h2>Programme de la session ({{ session.programmes|length }})</h2>
 
-    {% if session.programmes|length > 0 %}
+    <div>
+        {% if session.programmes|length > 0 %}
 
-        {% set totalJours = 0 %}
+            {% set totalJours = 0 %}
 
-        <table>
-            <thead>
-                <tr>
-                    <th>Nom du Module</th>
-                    <th>Nombre de jours</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for programme in session.programmes %} {# Mieux lire les S #}
+            <table>
+                <thead>
                     <tr>
-                        <td>{{ programme.module.nom }}</td>
-                        <td>{{ programme.nbJours }}</td>
+                        <th>Nom du Module</th>
+                        <th>Nombre de jours</th>
                     </tr>
-                
-                    {% set totalJours = totalJours + programme.nbJours %}
-                {% endfor %}
-            </tbody>
-            <tfoot>
-                <tr>
-                    <th>Total des jours</th>
-                    <th>{{ totalJours }}</th>
-                </tr>
-            </tfoot>
-        </table>
+                </thead>
+                <tbody>
+                    {% for programme in session.programmes %} {# Mieux lire les S #}
+                        <tr>
+                            <td>{{ programme.module.nom }}</td>
+                            <td>{{ programme.nbJours }}</td>
+                        </tr>
+                    
+                        {% set totalJours = totalJours + programme.nbJours %}
+                    {% endfor %}
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>Total des jours</th>
+                        <th>{{ totalJours }}</th>
+                    </tr>
+                </tfoot>
+            </table>
 
-    {% else %}
+        {% else %}
 
-        <p>Aucun module prévu pour cette session.</p>
-        
-    {% endif %}
+            <p>Aucun module prévu pour cette session.</p>
+            
+        {% endif %}
+    </div>
+
+    <div>
+        <h2>Module hors session </h2>
+
+        <ul>
+            {% for module in nonProgrammes %}
+                <li> {{ module.nom}} </li>
+                {% else %}
+                <li> Aucun module à rajouter </li>
+            {% endfor %}
+        </ul>
+    </div>
 
 {% endblock %}

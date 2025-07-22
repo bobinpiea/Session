@@ -92,26 +92,19 @@ final class SessionController extends AbstractController
 
     /* Détail  */
         #[Route('/session/{id}', name: 'show_session')]
-        public function show(Session $session): Response
+        public function show(Session $session = null, SessionRepository $sr): Response
         {
+            $nonInscrits = $sr->findNonInscrits($session->getId());
+            $nonProgrammes = $sr->findNonProgrammes($session->getId());
+
             return $this->render('session/show.html.twig', [
             'session' => $session,
+            'nonInscrits'=> $nonInscrits,
+            'nonProgrammes' => $nonProgrammes,
             ]);
         }
 
-    /* Liste des programmes associés à une session (modules + nb jours)  A SUPPRIMER */
-        #[Route('/programme/session/{id}', name: 'show_programme_by_session')]
-        public function showProgrammeBySession(Session $session): Response
-        {
-            // On récupère les programmes liés à cette session et on les stocke
-            $programmes = $session->getProgrammes();
 
-            // On affiche la vue avec les données
-            return $this->render('session/programmes.html.twig', [
-                'session' => $session,
-                'programmes' => $programmes
-            ]);
-        }
 
 }
 

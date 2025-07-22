@@ -227,7 +227,8 @@ class Session
         $periode = new DatePeriod($debut, new DateInterval('P1D'), $fin);
 
         $ferie = array('2025-01-01', '2025-04-21', '2025-05-01', '2025-05-08', '2025-05-29', 
-                    '2025-06-09', '2025-07-14', '2025-08-15', '2025-11-01', '2025-11-11', '2025-12-25');
+                    '2025-06-09', '2025-07-14', '2025-08-15', '2025-11-01', '2025-11-11', '2025-12-25', '2025-12-26', '2025-04-18'); 
+        // Les deux derniers c'est l'Alsace Moselle, + deux jours fériés
 
         foreach($periode as $dt) {
             $curr = $dt->format('D');

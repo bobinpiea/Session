@@ -82,3 +82,31 @@ public function findUpcomingSessions(): array
         ->getQuery()
         ->getResult();
 }
+
+
+
+
+
+// 📁 Dans StagiaireRepository.php
+
+public function findNonInscrits(Session $session): array
+{
+    $em = $this->getEntityManager();
+
+    // Sous-requête : récupérer les stagiaires déjà inscrits à la session
+    $sub = $em->createQueryBuilder()
+        ->select('s.id')
+        ->from('App\Entity\Stagiaire', 's')
+        ->leftJoin('s.sessions', 'se')
+        ->where('se = :session');
+
+    // Requête principale : tous les stagiaires NON inscrits
+    $qb = $em->createQueryBuilder()
+        ->select('st')
+        ->from('App\Entity\Stagiaire', 'st')
+        ->where($qb->expr()->notIn('st.id', $sub->getDQL()))
+        ->setParameter('session', $session)
+        ->orderBy('st.nom', 'ASC');
+
+    return $qb->getQuery()->getResult();
+}
