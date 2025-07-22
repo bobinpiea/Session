@@ -6,6 +6,7 @@ use App\Entity\Module;
 use App\Form\ModuleType;
 use App\Entity\Categorie;
 use App\Entity\Programme;
+use App\Form\CategorieType;
 use App\Form\ProgrammeType;
 use App\Repository\ModuleRepository;
 use App\Repository\CategorieRepository;
@@ -139,6 +140,43 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
                  
  
             /* Formulaire CATEGORIE */
+              // FORMULAIRE + ÉDITIONs
+                #[Route('/categorie/new', name: 'new_categorie')]
+                #[Route('/categorie/{id}/edit', name: 'edit_categorie')]
+                public function newCategorie(Request $request, EntityManagerInterface $entityManager, Categorie $categorie = null): Response
+                {
+                    // Si aucun objet Categorie n’est fourni, on en crée un vide
+                    if (!$categorie) {
+                        $categorie = new Categorie();
+                    }
+
+                    // On génère le formulaire à partir de CategorieType et on le lie à l’objet
+                    $form = $this->createForm(CategorieType::class, $categorie);
+
+                    // On lie les données de la requête HTTP (formulaire soumis)
+                    $form->handleRequest($request);
+
+                    // Si le formulaire est soumis ET valide
+                    if ($form->isSubmitted() && $form->isValid()) {
+
+                        // On récupère les données du formulaire dans l’objet $categorie
+                        $categorie = $form->getData();
+
+                        // On prépare puis envoie l'objet en base
+                        $entityManager->persist($categorie);
+                        $entityManager->flush();
+
+                        // Redirection vers une page au choix (ex : liste des catégories)
+                        return $this->redirectToRoute('app_categorie');
+                    }
+
+                    // Affichage du formulaire (mode création ou édition)
+                    return $this->render('categorie/new.html.twig', [
+                        'formAddCategorie' => $form,
+                        'edit' => $categorie->getId(),
+                    ]);
+                }
+
             
         /* DETAILS */    
 

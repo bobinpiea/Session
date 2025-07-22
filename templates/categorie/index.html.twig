@@ -27,7 +27,7 @@
                         <td>{{ categorie.nom }}</td>
                         <td>
                             <a href="{{ path('show_categorie', {'id': categorie.id}) }}">👁️</a>
-                            <a href="">✏️</a>
+                            <a href="{{ path('new_categorie') }}">➕ Catégorie</a>
                             <a href="{{ path('delete_categorie', {id: categorie.id}) }}">🗑️</a>
                         </td>
                     </tr>

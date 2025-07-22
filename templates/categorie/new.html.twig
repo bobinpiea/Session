@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {% if edit %}
+        Modifier une catégorie
+    {% else %}
+        Ajouter une catégorie
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+
+    <div class="bloc-titre-page">
+        {% if edit %}
+            <h1>Modifier une catégorie</h1>
+        {% else %}
+            <h1>Ajouter une catégorie</h1>
+        {% endif %}
+    </div>
+
+    {{ form(formAddCategorie) }}
+    {# Affiche automatiquement le formulaire lié à l’objet "formAddModule" #}
+
+{% endblock %}
