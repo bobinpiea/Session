@@ -110,3 +110,4 @@ public function findNonInscrits(Session $session): array
 
     return $qb->getQuery()->getResult();
 }
+

@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Session;
 use App\Form\SessionType;
+use Doctrine\ORM\EntityManager;
 use App\Repository\SessionRepository;
+use App\Repository\StagiaireRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,7 +16,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 final class SessionController extends AbstractController
 {
-    /* Liste  */
+    /* LISTE  */
         #[Route('/session', name: 'app_session')]
         public function index(SessionRepository $sessionRepository): Response
         {   
@@ -28,7 +30,7 @@ final class SessionController extends AbstractController
             ]);
         }
 
-    /* Formulaire + Edit */
+    /* FORMULAIRE + EDIT */
         // ROUTES : Cette méthode sera appelée lorsqu’un utilisateur accède à /session/new ou /session/{id}/edit
         #[Route('/session/new', name: 'new_session')] // Création d'un nouvelle session 
         #[Route('/session/{id}/edit', name: 'edit_session')] // Modification d'une nouvelle sessions
@@ -75,7 +77,7 @@ final class SessionController extends AbstractController
             ]);
         }
 
-    /* Suppression  */
+    /* SUPPRESSION  */
 
         // ROUTE :
         #[Route('/session/{id}/delete', name: 'delete_session')]
@@ -90,7 +92,7 @@ final class SessionController extends AbstractController
         }
 
 
-    /* Détail  */
+    /* DETAIL  */
         #[Route('/session/{id}', name: 'show_session')]
         public function show(Session $session = null, SessionRepository $sr): Response
         {
@@ -104,8 +106,28 @@ final class SessionController extends AbstractController
             ]);
         }
 
+    /* DÉSINSCRIPTION d’un stagiaire à session*/
+        #[Route('/session/{idSession}/{idStagiaire}/remove', name: 'remove_stagiaire_session')]
+        public function removeStagiaireFromSession(EntityManagerInterface $EntityManager, 
+        $idSession, $idStagiaire, SessionRepository $SessionRepository, StagiaireRepository $StagiaireRepository ): Response {
+
+                $session = $SessionRepository->find($idSession);  // ou find($session->getId())
+                $stagiaire = $StagiaireRepository->find($idStagiaire); // ou find($stagiaire->getId())
+        
+                $session->removeStagiaire($stagiaire);
+
+                $EntityManager->persist($session);
+                $EntityManager->flush();
+
+                $this->addFlash('success', 'Le stagiaire désinscrit de la session.');
+
+            return $this->redirectToRoute('show_session',
+            [
+                'id' => $idSession,
+            ]);
+        
+        }
 
 
 }
-
 

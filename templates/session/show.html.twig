@@ -31,7 +31,9 @@
     {% if session.stagiaires|length > 0 %}
         <ul>
             {% for stagiaire in session.stagiaires %}
-                <li>{{ stagiaire.nom }} {{ stagiaire.prenom }}</li>
+                <li>{{ stagiaire.nom }} {{ stagiaire.prenom }}
+                <a href="{{ path('remove_stagiaire_session', {idSession: session.id, idStagiaire: stagiaire.id}) }}"> Retirer</a>
+                </li>
             {% endfor %}
         </ul>
     {% else %}
@@ -42,7 +44,7 @@
 
         <ul>
             {% for stagiaire in nonInscrits %}
-                <li>{{ stagiaire.nom }} {{ stagiaire.prenom }}</li>
+                <li>{{ stagiaire.nom }} {{ stagiaire.prenom }} </li>
             {% else %}
                 <li>Aucun stagiaire à inscrire.</li>
             {% endfor %}
