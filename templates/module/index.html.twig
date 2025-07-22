@@ -26,8 +26,7 @@
                         <td>
                             <a href="{{ path('show_module', {'id': module.id }) }}">👁️ Voir</a>
                             <a href="{{ path('edit_module', {'id': module.id }) }}">✏️ Modifier</a>
-                            <a href="#">🗑️ Supprimer</a>
-                            {# a Completer plus tard #}
+                            <a href="{{ path('delete_module', {id: module.id}) }}">🗑️</a>
                         </td>
                     </tr>
                 {% endfor %}

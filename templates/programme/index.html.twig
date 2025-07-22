@@ -30,8 +30,8 @@
                         <td>{{ programme.module.nom }}</td>
                         <td>
                             <a href="{{ path('show_programme', {'id': programme.id}) }}">👁️</a>
-                            <a href="">✏️</a>
-                            <a href="">🗑️</a>  
+                            <a href="{{ path('edit_programme', {'id': programme.id}) }}">✏️</a>
+                            <a href="{{ path('delete_programme', {'id': programme.id}) }}">🗑️</a>
                             {# à compléter plus tard #}
                         </td>
                     </tr>

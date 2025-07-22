@@ -6,6 +6,7 @@ use App\Entity\Module;
 use App\Form\ModuleType;
 use App\Entity\Categorie;
 use App\Entity\Programme;
+use App\Form\ProgrammeType;
 use App\Repository\ModuleRepository;
 use App\Repository\CategorieRepository;
 use App\Repository\ProgrammeRepository;
@@ -56,6 +57,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
         /* FORMULAIRES */  
              
             /* Formulaire MODULE */
+
                 // FORMULAIRE + ÉDITION
                 #[Route('/module/new', name: 'new_module')]
                 #[Route('/module/{id}/edit', name: 'edit_module')]
@@ -98,11 +100,49 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
                        
             /* Formulaire PROGRAMME */
 
+                // FORMULAIRE + ÉDITION
+                #[Route('/programme/new', name: 'new_programme')]
+                #[Route('/programme/{id}/edit', name: 'edit_programme')]
+                public function newprogramme (Request $request, EntityManagerInterface $entityManager, Programme $programme = null): Response
+                {
+                    // Si aucun objet Programme n’est fourni, on en crée un vide
+                    if (!$programme) {
+                        $programme = new Programme();
+                    }
+
+                    // On génère le formulaire à partir de ProgrammeType et on le lie à l’objet
+                    $form = $this->createForm(ProgrammeType::class, $programme);
+
+                    // On lie les données de la requête HTTP (formulaire soumis)
+                    $form->handleRequest($request);
+
+                    // Si le formulaire est soumis ET valide
+                    if ($form->isSubmitted() && $form->isValid()) {
+
+                        // On récupère les données du formulaire dans l’objet $programme
+                        $programme = $form->getData();
+
+                        // On prépare puis envoie l'objet en base
+                        $entityManager->persist($programme);
+                        $entityManager->flush();
+
+                        // Redirection vers une page au choix (ex : liste des programmes)
+                        return $this->redirectToRoute('app_programme');
+                    }
+
+                    // Affichage du formulaire (mode création ou édition)
+                    return $this->render('programme/new.html.twig', [
+                        'formAddProgramme' => $form,
+                        'edit' => $programme->getId(),
+                    ]);
+                }
+                 
+ 
             /* Formulaire CATEGORIE */
             
         /* DETAILS */    
 
-            /* détail MODULE */
+            /* Détail MODULE */
                     #[Route('/module/{id}', name: 'show_module')]
                 public function show(Module $module): Response
                 {
@@ -130,5 +170,50 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
                     ]);
                 }
 
+        /* SUPPRESSION */
+
+            // SUPPRESSION d’un module
+                #[Route('/module/{id}/delete', name: 'delete_module')]
+                public function deleteModule(Module $module, EntityManagerInterface $em): Response
+                {
+                    $em->remove($module);     
+                    $em->flush();  
+
+                    // Message flash 
+                    $this->addFlash('success', 'Module supprimé avec succès.');
+
+                    // Redirection vers la liste des modules
+                    return $this->redirectToRoute('app_module');
+                }
+
+
+            // SUPPRESSION d’un programme
+                #[Route('/programme/{id}/delete', name: 'delete_programme')]
+                public function deleteProgramme(Programme $programme, EntityManagerInterface $em): Response
+                {
+                    $em->remove($programme);     
+                    $em->flush();  
+
+                    // Message flash 
+                    $this->addFlash('success', 'Programme supprimé avec succès.');
+
+                    //  Redirection vers la liste
+                    return $this->redirectToRoute('app_programme');
+                }
+
+
+            // SUPPRESSION d’une catégorie
+                #[Route('/categorie/{id}/delete', name: 'delete_categorie')]
+                public function deleteCategorie(Categorie $categorie, EntityManagerInterface $em): Response
+                {
+                    $em->remove($categorie);     
+                    $em->flush();  
+
+                    // Message flash 
+                    $this->addFlash('success', 'Catégorie supprimée avec succès.');
+
+                    // Redirection vers la liste des catégories
+                    return $this->redirectToRoute('app_categorie');
+                }
 
     }

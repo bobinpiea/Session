@@ -28,8 +28,7 @@
                         <td>
                             <a href="{{ path('show_categorie', {'id': categorie.id}) }}">👁️</a>
                             <a href="">✏️</a>
-                            <a href="">🗑️</a>  
-                            {# à compléter plus tard #}
+                            <a href="{{ path('delete_categorie', {id: categorie.id}) }}">🗑️</a>
                         </td>
                     </tr>
                 {% endfor %}
