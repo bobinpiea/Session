@@ -44,7 +44,7 @@
 
         <ul>
             {% for stagiaire in nonInscrits %}
-                <li>{{ stagiaire.nom }} {{ stagiaire.prenom }} </li>
+                <li><a href="{{ path('add_stagiaire_session', { idSession: session.id, idStagiaire: stagiaire.id }) }}">Ajouter à la liste des inscrits</a>  {{ stagiaire.nom }} {{ stagiaire.prenom }}</li> 
             {% else %}
                 <li>Aucun stagiaire à inscrire.</li>
             {% endfor %}

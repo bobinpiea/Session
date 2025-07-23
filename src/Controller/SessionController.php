@@ -106,34 +106,81 @@ final class SessionController extends AbstractController
             ]);
         }
 
-    /* DÉSINSCRIPTION d’un stagiaire à session*/
-        #[Route('/session/{idSession}/{idStagiaire}/remove', name: 'remove_stagiaire_session')]
-        public function removeStagiaireFromSession(EntityManagerInterface $EntityManager, 
-        $idSession, $idStagiaire, SessionRepository $SessionRepository, StagiaireRepository $StagiaireRepository ): Response {
+    /* INSCRIPTION d’un stagiaire à une session */
+    #[Route('/session/{idSession}/{idStagiaire}/add', name: 'add_stagiaire_session')]
+    public function addStagiaireToSession(
+        EntityManagerInterface $em,
+        int $idSession,
+        int $idStagiaire,
+        SessionRepository $sessionRepo,
+        StagiaireRepository $stagRepo
+    ): Response {
+        $session   = $sessionRepo->find($idSession);
+        $stagiaire = $stagRepo->find($idStagiaire);
 
-                $session = $SessionRepository->find($idSession);  // ou find($session->getId())
-                $stagiaire = $StagiaireRepository->find($idStagiaire); // ou find($stagiaire->getId())
-
-                if ($session && $stagiaire) {
-                    $session->removeStagiaire($stagiaire);
-
-                    if ($session->getPlaceDisponibles() > 0) {
-                        $session->setPlaceDisponibles($session->getPlaceDisponibles() - 1);
-                    }
-
-                $EntityManager->persist($session);
-                $EntityManager->flush();
-
-                $this->addFlash('success', 'Le stagiaire désinscrit de la session.');
-
-            return $this->redirectToRoute('show_session',
-            [
-                'id' => $idSession,
-            ]);
-        
+        if ($session && $stagiaire) {
+            if ($session->estComplet()) {
+                $this->addFlash('error', "Impossible : la session est complète.");
+            } else {
+         
+                $session->addStagiaire($stagiaire);
+                
+                $session->setPlaceReservees(
+                    $session->getPlaceReservees() + 1
+                );
+              
+                $session->setPlaceRestantes(
+                    $session->getPlaceDisponibles() - $session->getPlaceReservees()
+                );
+              
+                $em->persist($session);
+                $em->flush();
+                $this->addFlash('success', "Stagiaire inscrit avec succès !");
             }
+
+            return $this->redirectToRoute('show_session', ['id' => $idSession]);
         }
+
+        return $this->redirectToRoute('app_session');
+    }
+
+
+    /* DÉSINSCRIPTION d’un stagiaire à une session */
+    #[Route('/session/{idSession}/{idStagiaire}/remove', name: 'remove_stagiaire_session')]
+    public function removeStagiaireFromSession(
+        EntityManagerInterface $em,
+        int $idSession,
+        int $idStagiaire,
+        SessionRepository $sessionRepo,
+        StagiaireRepository $stagRepo
+    ): Response {
+        $session   = $sessionRepo->find($idSession);
+        $stagiaire = $stagRepo->find($idStagiaire);
+
+        if ($session && $stagiaire) {
+
+            $session->removeStagiaire($stagiaire);
+ 
+            $session->setPlaceReservees(
+                $session->getPlaceReservees() - 1
+            );
+         
+            $session->setPlaceRestantes(
+                $session->getPlaceDisponibles() - $session->getPlaceReservees()
+            );
+         
+            $em->persist($session);
+            $em->flush();
+            $this->addFlash('success', "Stagiaire désinscrit avec succès.");
+        }
+
+        return $this->redirectToRoute('show_session', ['id' => $idSession]);
+    }
 
 
 
 }
+
+
+
+
