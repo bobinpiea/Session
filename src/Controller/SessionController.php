@@ -105,77 +105,83 @@ final class SessionController extends AbstractController
             'nonProgrammes' => $nonProgrammes,
             ]);
         }
+  
 
     /* INSCRIPTION d’un stagiaire à une session */
-    #[Route('/session/{idSession}/{idStagiaire}/add', name: 'add_stagiaire_session')]
-    public function addStagiaireToSession(
-        EntityManagerInterface $em,
-        int $idSession,
-        int $idStagiaire,
-        SessionRepository $sessionRepo,
-        StagiaireRepository $stagRepo
-    ): Response {
-        $session   = $sessionRepo->find($idSession);
-        $stagiaire = $stagRepo->find($idStagiaire);
+        #[Route('/session/{idSession}/{idStagiaire}/add', name: 'add_stagiaire_session')]
+        public function addStagiaireToSession( EntityManagerInterface $entityManager, $idSession, $idStagiaire,
+        SessionRepository $SessionRepository, StagiaireRepository $StagiaireRepository ): Response {
+            // 1) On récupère la session et le stagiaire en base
+            $session   = $SessionRepository->find($idSession);
+            $stagiaire = $StagiaireRepository->find($idStagiaire);
 
-        if ($session && $stagiaire) {
-            if ($session->estComplet()) {
-                $this->addFlash('error', "Impossible : la session est complète.");
-            } else {
-         
-                $session->addStagiaire($stagiaire);
-                
-                $session->setPlaceReservees(
-                    $session->getPlaceReservees() + 1
-                );
-              
-                $session->setPlaceRestantes(
-                    $session->getPlaceDisponibles() - $session->getPlaceReservees()
-                );
-              
-                $em->persist($session);
-                $em->flush();
-                $this->addFlash('success', "Stagiaire inscrit avec succès !");
+            if ($session && $stagiaire) {
+                // 2) On vérifie si la session est complète
+                if ($session->estComplet()) {
+                    $this->addFlash('error', "Impossible d'ajouter ce stagiaire : la session est complète.");
+                } else {
+                    // 3) On rattache le stagiaire à la session
+                    $session->addStagiaire($stagiaire);
+
+                    // 4) On incrémente le nombre de places réservées
+                    $session->setPlaceReservees(
+                        $session->getPlaceReservees() + 1
+                    );
+
+                    // 5) On recalcule le nombre de places restantes
+                    $session->setPlaceRestantes(
+                        $session->getPlaceDisponibles() - $session->getPlaceReservees()
+                    );
+
+                    // 6) On enregistre les modifications en base
+                    $entityManager->persist($session);
+                    $entityManager->flush();
+
+                    $this->addFlash('success', "Le stagiaire a bien été inscrit à la session.");
+                }
+
+                // 7) Redirection vers le détail de la session
+                return $this->redirectToRoute('show_session', ['id' => $idSession]);
             }
 
-            return $this->redirectToRoute('show_session', ['id' => $idSession]);
+            // session ou stagiaire introuvable : retour à la liste
+            return $this->redirectToRoute('app_session');
         }
-
-        return $this->redirectToRoute('app_session');
-    }
 
 
     /* DÉSINSCRIPTION d’un stagiaire à une session */
-    #[Route('/session/{idSession}/{idStagiaire}/remove', name: 'remove_stagiaire_session')]
-    public function removeStagiaireFromSession(
-        EntityManagerInterface $em,
-        int $idSession,
-        int $idStagiaire,
-        SessionRepository $sessionRepo,
-        StagiaireRepository $stagRepo
-    ): Response {
-        $session   = $sessionRepo->find($idSession);
-        $stagiaire = $stagRepo->find($idStagiaire);
+        #[Route('/session/{idSession}/{idStagiaire}/remove', name: 'remove_stagiaire_session')]
+        public function removeStagiaireFromSession( EntityManagerInterface $entityManager, $idSession, $idStagiaire,
+        SessionRepository $SessionRepository, StagiaireRepository $StagiaireRepository ): Response {
+           
+            // 1) On récupère la session et le stagiaire en base
+            $session   = $SessionRepository->find($idSession);
+            $stagiaire = $StagiaireRepository->find($idStagiaire);
 
-        if ($session && $stagiaire) {
+            if ($session && $stagiaire) {
+                // 2) On détache le stagiaire de la session
+                $session->removeStagiaire($stagiaire);
 
-            $session->removeStagiaire($stagiaire);
- 
-            $session->setPlaceReservees(
-                $session->getPlaceReservees() - 1
-            );
-         
-            $session->setPlaceRestantes(
-                $session->getPlaceDisponibles() - $session->getPlaceReservees()
-            );
-         
-            $em->persist($session);
-            $em->flush();
-            $this->addFlash('success', "Stagiaire désinscrit avec succès.");
+                // 3) On décrémente le nombre de places réservées
+                $session->setPlaceReservees(
+                    $session->getPlaceReservees() - 1
+                );
+
+                // 4) On recalcule le nombre de places restantes
+                $session->setPlaceRestantes(
+                    $session->getPlaceDisponibles() - $session->getPlaceReservees()
+                );
+
+                // 5) On enregistre les modifications en base
+                $entityManager->persist($session);
+                $entityManager->flush();
+
+                $this->addFlash('success', "Le stagiaire a bien été désinscrit de la session.");
+            }
+
+            // Redirection vers le détail de la session
+            return $this->redirectToRoute('show_session', ['id' => $idSession]);
         }
-
-        return $this->redirectToRoute('show_session', ['id' => $idSession]);
-    }
 
 
 
